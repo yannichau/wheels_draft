@@ -1,0 +1,75 @@
+import 'package:flutter/material.dart';
+import 'kmb_eta.dart';
+
+class KMBBusStop {
+  String cName;
+  num y;
+  num eLocation;
+  num x;
+  num airFare;
+  String eName;
+  String sCName;
+  int serviceType;
+  String cLocation;
+  String bsiCode;
+  num seq;
+  String sCLocation;
+  String direction;
+  num nound;
+  String route;
+} 
+
+class KMBListStops extends StatefulWidget {
+
+  final List<Map<String,Object>> stops;
+
+  KMBListStops({
+    @required this.stops,
+  });
+
+  @override
+  _KMBListStopsState createState() => _KMBListStopsState();
+}
+
+class _KMBListStopsState extends State<KMBListStops> {
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: widget.stops.length,
+      itemBuilder: (context, index) {
+
+        String fare = widget.stops[index]["AirFare"];
+        var fareRounded = (double.parse(fare));
+
+        return Card (
+            child: ExpansionTile(
+              leading: Text(widget.stops[index]["Seq"]),
+              title: Text(widget.stops[index]["CName"]),
+              children: <Widget>[
+                Align(
+                  child: Column(
+                    children: [
+                      Text(
+                        "附近：" + widget.stops[index]["CLocation"],
+                      ),
+                      Text(    
+                        "車費： \$" + "${fareRounded}",
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left:55.0, bottom: 30.0),
+                        child: KMBETA(
+                          stopCode:widget.stops[index]["BSICode"],
+                          seq: widget.stops[index]["Seq"],
+                        ),
+                      ),
+                    ]
+                  )
+                ),
+              ]
+          ),
+        );
+      },
+    );
+  }
+}
