@@ -2,13 +2,13 @@
 
 'Wheels' is an app designed to provide users with comprehensive route information across multiple bus operators in Hong Kong. 
 
----
 
 ## Getting Started
-(Currently unavailable)
+(Currently not available for release)
+
+This section mainly documents the interfaces of the application. 
 
 
----
 
 ## Documentation
 
@@ -37,7 +37,7 @@ While these apps are extremely powerful on their own, they fall short in terms o
 
 ### Aims
 
-The app is intended to achieve the aims outlined above. That is, the information offered in the app, are:
+The app is intended to achieve the aims outlined above. That is, the information offered in the app includes:
 - Route stop information,
 - Timetables,
 - Mapped locations of routes and their stops,
@@ -48,16 +48,35 @@ In addition, to aid the approachability of data, various features are implemente
 
 I have decided to develop this app on Google's Flutter Platform, since it offers a relatively straightforward manner to implement both frontend and backend features easily. From a development standpoint, developing on Flutter is a refreshing experience, and I feel a greater sense of achievement because I actually get to see the interfaces that I have created. In contrary, I never really actually get to "see" what I have done when I was working on school C++ projects throughout the year, though the things we have achieved with C++ are way more advanced functionality-wise. 
 
-Flutter allows me to spend most of my time developing the backend functionality of the app rather than the frontend interfaces. The high level widgets offered in Flutter are extremely useful for applications that mainly serve the purpose for fetching data, and the interfaces achieved are indeed consistent with typical Material-style apps. Most importantly of all, these widgets are compatible across both iOS and Android platforms, which means that it can potentially reach quite a bit of users (though at this point this is probably quite far-fetched provided my current progress on the project).
+Flutter allows me to spend most of my time developing the backend functionality of the app rather than the frontend interfaces. The high level widgets offered in Flutter are extremely useful for applications that mainly serve the purpose for fetching data, and the interfaces achieved are indeed consistent with typical Material-style apps. Most importantly of all, these widgets are compatible across both iOS and Android platforms, which means that it can potentially reach quite a bit of users (though I realise that this is probably quite far-fetched provided my current progress on the project).
 
 One thing to note is that I have never intended to develop this application to replace highly-versatile transit apps such as Google Maps or CityMapper. These applications rely on highly vetted algorithms to provide information for directions, in which incorporating APIs for bus ETA is merely a small part; such functionality is highly advanced and indeed quite unachievable without the large databases that these companies have specifically created for these purposes. Instead, this is merely an attempt for me to develop an application that brings together the functionality of different bus operators' apps, in a hopefully clean and efficient manner.
 
-## Stages of Development
+### Stages of Development
+
+The hot reload and restart capabilities of flutter allows me to simultaneously build code, test it, identify problems and make repetitive amendments. These are currently the most significant builds:
+
+1. Interface for listing route stops, and data fetching for routes,
+2. Tabbed interfaces for routes, for other information such as timetables, and special announcements,
+3. Overall home interface for searching routes; and,
+4. Interfaces for favourites and settings drawer.
+
+At this point, I have pretty much achieved the functional requirements outlined in the aims. However, in order to get the favourites page and settings drawer running, the following changes have to be made:
+
+5. Management of local storage, such that favourites can be kept locally, and route information is only reloaded when necessary; and,
+6. Language support.
+
+### APIs
+
+The following is a non-exahustive list of sites, such as research papers or data dictionaries, that describe the functionality of the APIs:
+- [Research on sniffing networks when using NWFB and KMB apps] (https://i.cs.hku.hk/fyp/2018/fyp18019/wp-content/uploads/2019/04/final-report-revised.pdf)
+- [NWFB API Data Dictionary] (https://www.nwstbus.com.hk/datagovhk/bus_eta_spi_specifications.pdf)
 
 
-## APIs
-
-
-## References
+### References
 
 (Nope, this is not cited in a proper IEEE/Chicago/MLA/whatever standard, but I do want to acknowledge the things I have read to work on this project.)
+
+- https://i.cs.hku.hk/fyp/2018/fyp18019/wp-content/uploads/2019/04/final-report-revised.pdf
+- https://www.nwstbus.com.hk/datagovhk/bus_eta_spi_specifications.pdf
+
