@@ -15,17 +15,11 @@ This section is written to teach users how to use the app. A traditional Chinese
 As the app is opened, the user is greeted with a highly versatile home page. On this screen:
 - The user can access a list of all the routes operated by the 4 operators; the route operator logo, number, origin, destination and special information (if necessary) is shown on each route card.
 - Upon tapping a route card, the tapped card expands to show navigators to a specific bound of the route; in most cases there are 2 bounds (origin to destination and destination to origin),
-
-![home_expanding_card.gif](ExampleGIFs/home_expanding_card.gif)
-
 - Tapping the search icon in the app bar reveals the on-screen keyboard, where the user can input a specific route,
-
-![home_search.gif](ExampleGIFs/home_search.gif)
-
 - Swiping from the left edge reveals the home drawer, which includes navigators to settings (currently incomplete) and other useful links; and finally,
 - Swiping from the right edge or tapping on the right icon within the bottom navigation bar reveals the yet-to-be-completed favourites page, which will include navigators to user specified routes or route-stops,
 
-![home_drawer.gif](ExampleGIFs/home_drawer.gif)
+![home_search.gif](ExampleGIFs/home_search.gif) ![home_drawer.gif](ExampleGIFs/home_drawer.gif)
 
 Clicking into a specific bound of a route reveals a new screen, where:
 - The appbar title indicates the route number and direction,
@@ -99,6 +93,15 @@ The following is a non-exahustive list of sites, such as research papers or data
 - [Research on sniffing networks when using NWFB and KMB apps](https://i.cs.hku.hk/fyp/2018/fyp18019/wp-content/uploads/2019/04/final-report-revised.pdf)
 - [NWFB API Data Dictionary](https://www.nwstbus.com.hk/datagovhk/bus_eta_spi_specifications.pdf)
 
+#### Links to example APIs
+- [KMB 53 Route Stops](http://search.kmb.hk/KMBWebSite/Function/FunctionRequest.ashx/?action=getstops&route=53&bound=1)
+- [KMB 1 ETA at stop NA06N21500](http://etav3.kmb.hk/?action=geteta&lang=tc&route=1&bound=2&stop=NA06N21500&stop_seq=3&serviceType=01&updated=1540284711000)
+- [KMB 286X Schedule](http://search.kmb.hk/KMBWebSite/Function/FunctionRequest.ashx/?action=getschedule&route=286X&bound=1)
+- [KMB 286X Special Announcements](http://search.kmb.hk/KMBWebSite/Function/FunctionRequest.ashx/?action=getannounce&route=286X&bound=1)
+- [KMB 286X Bus to bus interchange information](http://search.kmb.hk/KMBWebSite/Function/FunctionRequest.ashx/?action=getbbiforroute&route=286X&bound=1)
+- [CTB 11 Route Stops](https://rt.data.gov.hk/v1/transport/citybus-nwfb/route-stop/ctb/1/inbound)
+- [CTB 11 ETA at stop 001145](https://rt.data.gov.hk//v1/transport/citybus-nwfb/eta/CTB/001145/11)
+
 
 ### References
 
@@ -106,4 +109,5 @@ The following is a non-exahustive list of sites, such as research papers or data
 
 - https://i.cs.hku.hk/fyp/2018/fyp18019/wp-content/uploads/2019/04/final-report-revised.pdf
 - https://www.nwstbus.com.hk/datagovhk/bus_eta_spi_specifications.pdf
+- https://github.com/mob41/KmbETA-API
 
