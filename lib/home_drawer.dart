@@ -37,12 +37,26 @@ class _HomeDrawerState extends State<HomeDrawer> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text(
-              'Wheels 🚌',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Wheels 🚌',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30,
+                    ),
+                  ),
+                  Text(
+                    'Developed by cluelessyanni',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  )
+                ],
               ),
             ),
             decoration: BoxDecoration(
@@ -93,7 +107,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ListTile(
-              title: Text('cluelessyanni 的聲明'),
+              title: Text('聲明'),
               subtitle: Text(
                 '本 app 的資料庫及到站預報由九龍巴士（一九三三）有限公司及城巴/新巴（新創建集團成員）提供。如有任何資料配對錯漏，敬請原諒。誠邀您使用 feedback 功能匯報任何意見和 bug。謝謝😬！'
               ),

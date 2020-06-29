@@ -1,24 +1,51 @@
 # wheels_draft
 
-'Wheels' is an app designed to provide users with comprehensive route information across multiple bus operators in Hong Kong. 
+'Wheels' is an app designed to provide users with comprehensive route information across multiple bus operators in Hong Kong, more specifically Kowloon Motor Bus (KMB), Long Win Bus (LWB), CityBus (CTB) and New World First Bus (NWFB). 
 
 
 ## Getting Started
 (Currently not available for release)
 
-This section mainly documents the interfaces of the application. 
+This section is written to teach users how to use the app. A traditional Chinese version of this section will also be written if I do manage to finish this project.
 
+### Installation
+(Placeholder for installation instructions on both iOS and Android Platforms)
+
+### Using the app
+As the app is opened, the user is greeted with a highly versatile home page. On this screen:
+- The user can access a list of all the routes operated by the 4 operators; the route operator logo, number, origin, destination and special information (if necessary) is shown on each route card.
+- Upon tapping a route card, the tapped card expands to show navigators to a specific bound of the route; in most cases there are 2 bounds (origin to destination and destination to origin),
+
+![home_expanding_card.gif](ExampleGIFs/home_expanding_card.gif)
+
+- Tapping the search icon in the app bar reveals the on-screen keyboard, where the user can input a specific route,
+
+![home_search.gif](ExampleGIFs/home_search.gif)
+
+- Swiping from the left edge reveals the home drawer, which includes navigators to settings (currently incomplete) and other useful links; and finally,
+- Swiping from the right edge or tapping on the right icon within the bottom navigation bar reveals the yet-to-be-completed favourites page, which will include navigators to user specified routes or route-stops,
+
+![home_drawer.gif](ExampleGIFs/home_drawer.gif)
+
+Clicking into a specific bound of a route reveals a new screen, where:
+- The appbar title indicates the route number and direction,
+- The tab bar at the bottom of the appbar provides navigators to ETA data (and route stop information), timetables and more,
+- Expanding cards reveal additional relevant information.
+
+![stop_eta.gif](ExampleGIFs/stop_eta.gif) ![kmb_tt_bbi_ann.gif](ExampleGIFs/kmb_tt_bbi_ann.gif)
 
 
 ## Documentation
 
-The following section is the documentation for the development of this application. I attempt to document this project comprehensively, though the format might be slightly informal since this is merely a casual personal project.
+The following is the documentation for the development of this app. At the moment, this section is also only written in English (ironically the app is currently only available in traditional Chinese). I will attempt to document this project comprehensively, though the format might be slightly (quite) informal since this is merely a casual personal project.
+
+In addition, various technical details are omitted at the moment since they are subject to a huge refactoring when I start managing local storage.
 
 ### Motivation
 
 Currently, there are mainly 2 companies that operate franchised bus routes in the Hong Kong Island, Kowloon and New Territories regions, namely:
-- Kowloon Motor Bus  Co. (1933) Ltd, which operates KMB (Kowloon Motor Bus) and LWB (Long Win Bus); and,
-- NWS Holdings, which operates CTB (CityBus) and NWFB (New World First Bus).
+- Kowloon Motor Bus  Co. (1933) Ltd, which operates KMB and LWB; and,
+- NWS Holdings, which operates CTB and NWFB.
 
 Both companies operate a wide range of routes, which can be classified into the following categories:
 - Routes within the 3 regions mentioned above, 
@@ -54,7 +81,7 @@ One thing to note is that I have never intended to develop this application to r
 
 ### Stages of Development
 
-The hot reload and restart capabilities of flutter allows me to simultaneously build code, test it, identify problems and make repetitive amendments. These are currently the most significant builds:
+The hot reload and restart capabilities of flutter allows me to simultaneously build code, test it, identify problems and make repetitive amendments. These are the most significant builds that have been completed up to Late June:
 
 1. Interface for listing route stops, and data fetching for routes,
 2. Tabbed interfaces for routes, for other information such as timetables, and special announcements,
@@ -64,13 +91,13 @@ The hot reload and restart capabilities of flutter allows me to simultaneously b
 At this point, I have pretty much achieved the functional requirements outlined in the aims. However, in order to get the favourites page and settings drawer running, the following changes have to be made:
 
 5. Management of local storage, such that favourites can be kept locally, and route information is only reloaded when necessary; and,
-6. Language support.
+6. Support for English (Currently, the only available language is traditional Chinese).
 
 ### APIs
 
 The following is a non-exahustive list of sites, such as research papers or data dictionaries, that describe the functionality of the APIs:
-- [Research on sniffing networks when using NWFB and KMB apps] (https://i.cs.hku.hk/fyp/2018/fyp18019/wp-content/uploads/2019/04/final-report-revised.pdf)
-- [NWFB API Data Dictionary] (https://www.nwstbus.com.hk/datagovhk/bus_eta_spi_specifications.pdf)
+- [Research on sniffing networks when using NWFB and KMB apps](https://i.cs.hku.hk/fyp/2018/fyp18019/wp-content/uploads/2019/04/final-report-revised.pdf)
+- [NWFB API Data Dictionary](https://www.nwstbus.com.hk/datagovhk/bus_eta_spi_specifications.pdf)
 
 
 ### References
