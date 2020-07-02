@@ -153,7 +153,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
   _buildSearchBar() {
     return TextField(
         showCursor: true,
-        keyboardType: TextInputType.numberWithOptions(),
+        keyboardType: TextInputType.visiblePassword,
         cursorColor: Colors.teal,
         autofocus: true,
         style: const TextStyle(color: Colors.white, fontSize: 20.0),
@@ -171,7 +171,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
           setState(() {
             _routesForDisplay = _routesUnfiltered.where( (note) { 
                 var routeNumber = note.routeNo.toUpperCase();
-                return routeNumber.contains(text);
+                return routeNumber.startsWith(text);
             }).toList();
           });
         },
@@ -254,6 +254,8 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
     });
     return routeFile;
 }
+
+
 
   
   //////////MAIN//////////

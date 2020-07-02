@@ -53,49 +53,7 @@ class _KMBTabsState extends State<KMBTabs> with SingleTickerProviderStateMixin {
             new Tab(text:"到站預報"),
             new Tab(text:"時間表"),
             new Tab(text:"轉乘優惠"),
-            new Tab(text:"特別資訊"),
-            /*
-            new Tab(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Icon(Icons.directions_bus),
-                  Text("路線到站預報"),
-                ],
-              )
-            ),
-            new Tab(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,                
-                children: [
-                  Icon(Icons.access_time),
-                  Text("時間表"),
-                ],
-              )
-            ),
-            new Tab(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,                
-                children: [
-                  Icon(Icons.compare_arrows),
-                  Text("轉乘優惠"),
-                ],
-              )
-            ),
-            new Tab(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,                
-                children: [
-                  Icon(Icons.announcement),
-                  Text("特別資訊"),
-                ],
-              )
-            ), 
-            */           
+            new Tab(text:"特別資訊"),       
           ],
         ),
       ),

@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+import 'dart:async' show Future;
+//import 'dart:convert';
+//import 'package:http/http.dart' as http;
+import 'kmb_eta.dart';
+import 'kmb_list_stops_model.dart';
+
+class KMBListStops extends StatefulWidget {
+  final String route;
+  final String bound;
+  final String serviceType;
+
+  KMBListStops({
+    @required this.route,
+    @required this.serviceType,
+    @required this.bound,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _KMBListStopsState createState() => _KMBListStopsState();
+}
+
+class _KMBListStopsState extends State<KMBListStops> {
+  Future<ListStops> _futureListStops;
+
+  @override
+  void initState() {
+    super.initState();
+    _futureListStops = fetchListStops(widget.route, widget.serviceType, widget.bound);
+  }
+
+  Text _removeUnknown(String stop) {
+    print(stop);
+    if (stop.contains('')) {
+      if (stop.contains('深水')) {
+        stop.replaceFirst(RegExp(''), '埗');
+      } else if (stop.contains('交')) {
+        stop.replaceFirst(RegExp(''), '匯');
+      } else {
+        stop.replaceFirst(RegExp(''), '邨');
+      }
+    }
+    print(stop);
+    return Text(stop);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<ListStops>(
+        future: _futureListStops,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            List<RouteStops> list = snapshot.data.data.routeStopsList;
+            ListView myList = new ListView.builder(
+                shrinkWrap: true,
+                itemCount: list.length,
+                //itemExtent: 25,
+                itemBuilder: (context, index) {
+                  return Card(
+                      child: ExpansionTile(
+                    leading: Text(list[index].seq),
+                    //title: new Text(list[index].cName,),
+                    title: _removeUnknown(list[index].cName),
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 55.0, bottom: 30.0),
+                        child: KMBETA(
+                          route: list[index].route,
+                          bound: list[index].bound,
+                          serviceType: list[index].serviceType,
+                          stopCode: list[index].bsiCode,
+                          seq: list[index].seq,
+                        ),
+                      )
+                    ],
+                  ));
+                });
+            return myList;
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+          return LinearProgressIndicator(
+            backgroundColor: Colors.red,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+          );
+        });
+  }
+}
