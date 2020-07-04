@@ -3,6 +3,7 @@
 ///////// DATA FETCHING PACKAGES /////////
 import 'dart:async' show Future;
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 
@@ -14,14 +15,13 @@ import 'package:path/path.dart';
 
 class KMBLSService {
   static LocalStorage storage = new LocalStorage("kmbRoutes");
-  var stopwatch = new Stopwatch()..start();
+  //var stopwatch = new Stopwatch()..start();
 
   Future<ListStops> getKMBLS(String route, String serviceType, String bound) async {
     var kmbLS = await getKMBLSFromCache(route, serviceType, bound);
-    if (kmbLS != null) {
-      return kmbLS;
+    if (kmbLS == null) {
+      return getKMBLSFromAPI(route, serviceType, bound);
     }
-    kmbLS = await getKMBLSFromAPI(route, serviceType, bound);
     return kmbLS;
     //how bout trying differentiating the 2 variables?
   }
@@ -30,18 +30,16 @@ class KMBLSService {
     print("call from api");
     ListStops kmbLS = await fetchListStops(route, serviceType, bound);
     kmbLS.fromCache = false;
-    saveKMBLS(route, kmbLS);
+    saveKMBLS(route, serviceType, bound, kmbLS);
     return kmbLS;
   }
 
   Future<ListStops> getKMBLSFromCache(String route, String serviceType, String bound) async {
     print("call from cache");
     await storage.ready;
-    Map <String, dynamic> data = storage.getItem(route);
+    Map <String, dynamic> data = storage.getItem(route+serviceType+bound);
     print(data);
     if (data == null) {
-      //throw Exception('Failed to load information');
-      Future.delayed(Duration(milliseconds: 2000));
       return null;
     }
     ListStops kmbLS = ListStops.fromJson(data);
@@ -49,9 +47,9 @@ class KMBLSService {
     return kmbLS;
   }
 
-  void saveKMBLS(String route, ListStops kmbLS) async {
+  void saveKMBLS(String route, String serviceType, String bound, ListStops kmbLS) async {
     await storage.ready;
-    storage.setItem(route, kmbLS);
+    storage.setItem(route+serviceType+bound, kmbLS);
   }
 
   Future<ListStops> fetchListStops(String route, String serviceType, String bound) async {

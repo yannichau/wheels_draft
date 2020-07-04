@@ -138,7 +138,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
             )
         ),
       );
-    } else {
+    } else { //jointly operated services
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -391,7 +391,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
         ),
         OutlineButton(
           child: Text(dest + " → " + org),
-          onPressed: () => _returnStops(route, "${serviceType}", "2", operator, org, dest),
+          onPressed: () => _returnStops(route, "${serviceType}", "2", operator, dest, org), //reversed direction here
         ),
       ]);
     }

@@ -49,9 +49,8 @@ class _MainTabsState extends State<MainTabs>
           ],
         ),
         bottomNavigationBar: new TabBar(
-          indicatorPadding: EdgeInsets.only(bottom:80),
+          //indicatorPadding: EdgeInsets.only(bottom:80),
           indicatorColor: Colors.indigo,
-          indicatorWeight: 5.0,
           labelColor: Colors.indigo,
           //elevation: 10.0,
           //fixedColor: Colors.white,
@@ -60,6 +59,9 @@ class _MainTabsState extends State<MainTabs>
           //currentIndex: index,
           //onTap: tapped,
           tabs: [
+            SafeArea(child: Tab(icon: new Icon(Icons.directions_bus), text:'路線')),
+            SafeArea(child: Tab(icon: new Icon(Icons.favorite), text:'我的最愛')),
+            /*
             Padding(
               padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               child: Tab(
@@ -70,6 +72,7 @@ class _MainTabsState extends State<MainTabs>
               child: Tab(
                   icon: new Icon(Icons.favorite), text:'我的最愛'),
             ),
+            */
           ],
         ),
       ),

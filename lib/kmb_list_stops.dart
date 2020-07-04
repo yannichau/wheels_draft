@@ -76,16 +76,22 @@ class _KMBListStopsState extends State<KMBListStops> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: kmbLS.data.routeStopsList.length,
-      itemBuilder: (context, index) {
-        return Card(
-          child: ExpansionTile(
-            leading: Text(kmbLS.data.routeStopsList[index].seq),
-            title: Text(kmbLS.data.routeStopsList[index].cName)
-          ),
-        );
-      },
+    if (kmbLS != null) {
+      return ListView.builder(
+        itemCount: kmbLS.data.routeStopsList.length,
+        itemBuilder: (context, index) {
+          return Card(
+            child: ExpansionTile(
+              leading: Text(kmbLS.data.routeStopsList[index].seq),
+              title: Text(kmbLS.data.routeStopsList[index].cName)
+            ),
+          );
+        },
+      );
+    }
+    return LinearProgressIndicator(
+      backgroundColor: Colors.red,
+      valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
     );
   }
 }
