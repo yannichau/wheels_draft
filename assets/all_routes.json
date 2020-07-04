@@ -7700,13 +7700,13 @@
         {
             "route_no": "286M",
             "ori_tc": "馬鞍山市中心",
-            "direction": "↔",
+            "direction": "↺",
             "dest_tc": "鑽石山站",
             "remarks_tc": "",
             "fare": "$ 7.2",
             "tag": "",
             "operator": "kmb",
-            "route_type": "bidirectional"
+            "route_type": "circular"
         },
         {
             "route_no": "286P",

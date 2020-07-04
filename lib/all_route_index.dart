@@ -121,7 +121,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
   }
 
   void _returnStops(String route, String serviceType, String bound, String operator, String oriTC, String destTC) {
-    print("operator: " + operator);
+    //print("operator: " + operator);
     if (operator == "kmb" || operator == "lwb") {
       Navigator.push(
         context,
@@ -372,10 +372,10 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
   }
 
   Column _availableDestinations(String type, String org, String dest, String direction, num serviceType, String route, String operator) {
-    print(type);
-    print(org);
-    print(dest);
-    print(direction);
+    //print(type);
+    //print(org);
+    //print(dest);
+    //print(direction);
     if (type == "one_way" || type == "circular") {
       return Column(children: [
         OutlineButton(

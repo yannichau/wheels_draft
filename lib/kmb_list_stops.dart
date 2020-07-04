@@ -61,14 +61,11 @@ class _KMBListStopsState extends State<KMBListStops> {
 
   Text _removeUnknown(String stop) {
     print(stop);
-    if (stop.contains('')) {
-      if (stop.contains('深水')) {
-        stop.replaceFirst(RegExp(''), '埗');
-      } else if (stop.contains('交')) {
-        stop.replaceFirst(RegExp(''), '匯');
-      } else {
-        stop.replaceFirst(RegExp(''), '邨');
-      }
+    // '埗' '匯' '邨'
+    var estate = '\ue473';
+    if (stop.contains(estate)) {
+      print("wow");
+      stop.replaceAll("",'邨');
     }
     print(stop);
     return Text(stop);
@@ -82,8 +79,8 @@ class _KMBListStopsState extends State<KMBListStops> {
         itemBuilder: (context, index) {
           return Card(
             child: ExpansionTile(
-              leading: Text(kmbLS.data.routeStopsList[index].seq),
-              title: Text(kmbLS.data.routeStopsList[index].cName)
+              leading: Text("${index + 1}"),
+              title: _removeUnknown(kmbLS.data.routeStopsList[index].cName), // why is this not working?
             ),
           );
         },

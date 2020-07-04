@@ -37,19 +37,21 @@ class KMBLSService {
   Future<ListStops> getKMBLSFromCache(String route, String serviceType, String bound) async {
     print("call from cache");
     await storage.ready;
-    Map <String, dynamic> data = storage.getItem(route+serviceType+bound);
+    Map <String, dynamic> data = storage.getItem("kmbroute"+route+serviceType+bound);
     print(data);
     if (data == null) {
       return null;
     }
     ListStops kmbLS = ListStops.fromJson(data);
     kmbLS.fromCache = true;
+    print("loaded item as " + "kmbroute"+route+serviceType+bound);
     return kmbLS;
   }
 
   void saveKMBLS(String route, String serviceType, String bound, ListStops kmbLS) async {
     await storage.ready;
-    storage.setItem(route+serviceType+bound, kmbLS);
+    storage.setItem("kmbroute"+route+serviceType+bound, kmbLS);
+    print("saved item as " + "kmbroute"+route+serviceType+bound);
   }
 
   Future<ListStops> fetchListStops(String route, String serviceType, String bound) async {
@@ -64,7 +66,7 @@ class KMBLSService {
     if (response.statusCode == 200) {
       return ListStops.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load information');
+      //throw Exception('Failed to load information');
     }
   }
 }

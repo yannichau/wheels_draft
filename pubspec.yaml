@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  characters: ^1.0.0
   sqflite: ^1.0.0
   path_provider: ^1.6.11
   shared_preferences: ^0.5.7+3
