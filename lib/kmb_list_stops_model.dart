@@ -18,10 +18,12 @@ class KMBLSService {
 
   Future<ListStops> getKMBLS(String route, String serviceType, String bound) async {
     var kmbLS = await getKMBLSFromCache(route, serviceType, bound);
-    if (kmbLS == null) {
-      return getKMBLSFromAPI(route, serviceType, bound);
+    if (kmbLS != null) {
+      return kmbLS;
     }
+    kmbLS = await getKMBLSFromAPI(route, serviceType, bound);
     return kmbLS;
+    //how bout trying differentiating the 2 variables?
   }
 
   Future<ListStops> getKMBLSFromAPI(String route, String serviceType, String bound) async {
@@ -35,9 +37,11 @@ class KMBLSService {
   Future<ListStops> getKMBLSFromCache(String route, String serviceType, String bound) async {
     print("call from cache");
     await storage.ready;
-    Map <String, dynamic> data = storage.getItem(route);s
+    Map <String, dynamic> data = storage.getItem(route);
+    print(data);
     if (data == null) {
-      throw Exception('Failed to load information');
+      //throw Exception('Failed to load information');
+      Future.delayed(Duration(milliseconds: 2000));
       return null;
     }
     ListStops kmbLS = ListStops.fromJson(data);

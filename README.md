@@ -107,7 +107,11 @@ The following is a non-exahustive list of sites, such as research papers or data
 
 (Nope, this is not cited in a proper IEEE/Chicago/MLA/whatever standard, but I do want to acknowledge the things I have read to work on this project.)
 
-- https://i.cs.hku.hk/fyp/2018/fyp18019/wp-content/uploads/2019/04/final-report-revised.pdf
-- https://www.nwstbus.com.hk/datagovhk/bus_eta_spi_specifications.pdf
+- https://i.cs.hku.hk/fyp/2018/fyp18019/wp-content/uploads/2019/04/final-report-revised.pdf (Wong San Yu)
+- https://www.nwstbus.com.hk/datagovhk/bus_eta_spi_specifications.pdf (NWS Holdings)
 - https://github.com/mob41/KmbETA-API
+- https://www.youtube.com/watch?v=jVVCHzkI8as ( Bram Vanbilsen)
+- https://github.com/bramvbilsen/Flutter-JSON-Storage-Tutorial/blob/master/lib/main.dart (bramvbilsen  et al.)
+- https://rickyanto.com/cache-locally-on-flutter-with-localstorage/ (Isak Rickyanto)
+- https://medium.com/flutter-community/parsing-complex-json-in-flutter-747c46655f51 (Pooja Bhaumik)
 
