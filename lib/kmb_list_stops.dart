@@ -40,6 +40,7 @@ class _KMBListStopsState extends State<KMBListStops> {
   Exception e;
 
   void _loadKMBLS(String route, String serviceType, String bound) async {
+    print("route:" + route + ", serviceType:" + serviceType + ", bound:" + bound);
     try {
       ListStops thekmbLS = await service.getKMBLS(route, serviceType, bound);
       setState(() {
@@ -65,7 +66,7 @@ class _KMBListStopsState extends State<KMBListStops> {
     var estate = '\ue473';
     if (stop.contains(estate)) {
       print("wow");
-      stop.replaceAll("",'邨');
+      stop.replaceAll("\ue473",'邨');
     }
     print(stop);
     return Text(stop);
@@ -73,8 +74,14 @@ class _KMBListStopsState extends State<KMBListStops> {
 
   @override
   Widget build(BuildContext context) {
-    if (kmbLS != null) {
-      return ListView.builder(
+    if (kmbLS == null) {
+      return LinearProgressIndicator(
+        backgroundColor: Colors.red,
+        valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
+      );
+    }
+    return ListView.builder(
+        key:widget._scaffoldKey,
         itemCount: kmbLS.data.routeStopsList.length,
         itemBuilder: (context, index) {
           return Card(
@@ -84,11 +91,6 @@ class _KMBListStopsState extends State<KMBListStops> {
             ),
           );
         },
-      );
-    }
-    return LinearProgressIndicator(
-      backgroundColor: Colors.red,
-      valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
     );
   }
 }

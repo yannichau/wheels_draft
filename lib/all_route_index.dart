@@ -123,12 +123,14 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
   void _returnStops(String route, String serviceType, String bound, String operator, String oriTC, String destTC) {
     //print("operator: " + operator);
     if (operator == "kmb" || operator == "lwb") {
+      setState(() {
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => KMBTabs(
                 route: route, serviceType: serviceType, bound: bound, oriTC: oriTC, destTC: destTC,)),
       );
+      });
     } else if (operator == "ctb" || operator == "nwfb") {
       Navigator.push(
         context,
@@ -139,12 +141,14 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
         ),
       );
     } else { //jointly operated services
+    setState(() {
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => KMBTabs(
                 route: route, serviceType: serviceType, bound: bound, oriTC: oriTC, destTC: destTC,)),
       );
+      });
     }
   }
 
@@ -292,7 +296,16 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
               shrinkWrap: true,
               itemCount: _routesForDisplay.length,// + 1,
               itemBuilder: (context, index) {
-                //return index == 0 ? _buildSearchBar() : 
+
+                currentRoute = _routesForDisplay[index].routeNo;
+                ////////// FIX SPECIAL ROUTES LATER //////////TODO:
+                if (currentRoute == prevRoute) {
+                  serviceType += 1;
+                } else {
+                  serviceType = 1;
+                }
+                prevRoute = currentRoute;
+
                 return _listItem(index);// - 1);
               },
             );
@@ -310,13 +323,6 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
   }
 
   _listItem(index) {
-    currentRoute = _routesForDisplay[index].routeNo;
-    if (currentRoute == prevRoute) {
-      serviceType += 1;
-    } else {
-      serviceType = 1;
-    }
-    prevRoute = currentRoute;
     return Card(
       child: ExpansionTile(
         leading: Container(

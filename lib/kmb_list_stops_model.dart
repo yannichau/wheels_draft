@@ -17,10 +17,16 @@ class KMBLSService {
   static LocalStorage storage = new LocalStorage("kmbRoutes");
   //var stopwatch = new Stopwatch()..start();
 
+  void saveKMBLS(String route, String serviceType, String bound, ListStops kmbLS) async {
+    await storage.ready;
+    storage.setItem("kmbroute"+route+"bound"+bound, kmbLS);
+    print("saved item as " + "kmbroute"+route+"bound"+bound);
+  }
+
   Future<ListStops> getKMBLS(String route, String serviceType, String bound) async {
-    var kmbLS = await getKMBLSFromCache(route, serviceType, bound);
+    ListStops kmbLS = await getKMBLSFromCache(route, serviceType, bound);
     if (kmbLS == null) {
-      return getKMBLSFromAPI(route, serviceType, bound);
+      kmbLS = await getKMBLSFromAPI(route, serviceType, bound);
     }
     return kmbLS;
     //how bout trying differentiating the 2 variables?
@@ -28,45 +34,45 @@ class KMBLSService {
 
   Future<ListStops> getKMBLSFromAPI(String route, String serviceType, String bound) async {
     print("call from api");
-    ListStops kmbLS = await fetchListStops(route, serviceType, bound);
-    kmbLS.fromCache = false;
-    saveKMBLS(route, serviceType, bound, kmbLS);
-    return kmbLS;
+    ListStops kmbLS;
+    if (serviceType == null || serviceType == "1") { //NEED TO DEAL WITH SPECIAL ROUTES LATER //TODO:
+      kmbLS = await fetchListStops(route, "1", bound);
+      kmbLS.fromCache = false;
+      saveKMBLS(route, serviceType, bound, kmbLS);
+      return kmbLS;
+    } else {
+      kmbLS = await fetchListStops(route, serviceType, bound); 
+      kmbLS.fromCache = false;
+      //Future.delayed(Duration(milliseconds: 100));
+      saveKMBLS(route, serviceType, bound, kmbLS);
+      return kmbLS;
+    }    
   }
 
   Future<ListStops> getKMBLSFromCache(String route, String serviceType, String bound) async {
     print("call from cache");
     await storage.ready;
-    Map <String, dynamic> data = storage.getItem("kmbroute"+route+serviceType+bound);
+    Map <String, dynamic> data = storage.getItem("kmbroute"+route+"bound"+bound);
     print(data);
     if (data == null) {
       return null;
     }
     ListStops kmbLS = ListStops.fromJson(data);
     kmbLS.fromCache = true;
-    print("loaded item as " + "kmbroute"+route+serviceType+bound);
+    print("loaded item as " + "kmbroute"+route+"bound"+bound);
     return kmbLS;
   }
 
-  void saveKMBLS(String route, String serviceType, String bound, ListStops kmbLS) async {
-    await storage.ready;
-    storage.setItem("kmbroute"+route+serviceType+bound, kmbLS);
-    print("saved item as " + "kmbroute"+route+serviceType+bound);
-  }
-
   Future<ListStops> fetchListStops(String route, String serviceType, String bound) async {
-    final response = await http.get(
-        "http://search.kmb.hk/KMBWebSite/Function/FunctionRequest.ashx?action=getstops&route=" +
-            route +
-            "&bound=" +
-            bound +
-            "&serviceType=" +
-            serviceType);
+    final link = "http://search.kmb.hk/KMBWebSite/Function/FunctionRequest.ashx?action=getstops&route=" + 
+            route + "&bound=" + bound + "&serviceType=" + serviceType;
+    print(link);
+    final response = await http.get(link);
 
     if (response.statusCode == 200) {
       return ListStops.fromJson(json.decode(response.body));
     } else {
-      //throw Exception('Failed to load information');
+      throw Exception('Failed to load information');
     }
   }
 }

@@ -7985,9 +7985,9 @@
         },
         {
             "route_no": "299X",
-            "ori_tc": "西貢",
+            "ori_tc": "沙田市中心",
             "direction": "↔",
-            "dest_tc": "沙田市中心",
+            "dest_tc": "西貢",
             "remarks_tc": "",
             "fare": "$ 10.3",
             "tag": "",
