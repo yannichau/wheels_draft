@@ -90,7 +90,7 @@ class KMBBBI extends StatefulWidget {
   _KMBBBIState createState() => _KMBBBIState();
 }
 
-class _KMBBBIState extends State<KMBBBI> {
+class _KMBBBIState extends State<KMBBBI> with AutomaticKeepAliveClientMixin{
   Future<KMBBBIAPI> futureKMBBBI;
 
   @override
@@ -142,4 +142,7 @@ class _KMBBBIState extends State<KMBBBI> {
           );
         });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

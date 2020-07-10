@@ -20,7 +20,7 @@ class NWFBListStops extends StatefulWidget {
     Key key,
   }) : super(key: key);
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>(); //WARNING about global key
 
   @override
   _NWFBListStopsState createState() => _NWFBListStopsState();
@@ -45,7 +45,15 @@ class _NWFBListStopsState extends State<NWFBListStops> {
   void _loadNWFBLS(String route, String bound, String operator) async {
     print("route:" + route + ", bound:" + bound + ", operator:" + operator);
     try {
-      NWFBAPI thenwfbLS = await service.getNWFBLS(route, bound, operator);
+
+      String boundMod;
+      if (bound == '1') {
+        boundMod = "outbound";
+      } else if (bound == '2') {
+        boundMod = "inbound";
+      }
+
+      NWFBAPI thenwfbLS = await service.getNWFBLS(route, boundMod, operator);
       setState(() {
         nwfbLS = thenwfbLS;
       });

@@ -118,7 +118,7 @@ class KMBTimetable extends StatefulWidget {
   _KMBTimetableState createState() => _KMBTimetableState();
 }
 
-class _KMBTimetableState extends State<KMBTimetable> {
+class _KMBTimetableState extends State<KMBTimetable> with AutomaticKeepAliveClientMixin{
 
   Future<KMBTimetableAPI> futureKMBTT;
 
@@ -334,4 +334,7 @@ class _KMBTimetableState extends State<KMBTimetable> {
       ]
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

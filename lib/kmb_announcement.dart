@@ -75,7 +75,7 @@ class KMBAnnouncement extends StatefulWidget {
   _KMBAnnouncementState createState() => _KMBAnnouncementState();
 }
 
-class _KMBAnnouncementState extends State<KMBAnnouncement> {
+class _KMBAnnouncementState extends State<KMBAnnouncement> with AutomaticKeepAliveClientMixin{
 
  _launchURL(String url) async {
   if (await canLaunch(url)) {
@@ -132,4 +132,7 @@ class _KMBAnnouncementState extends State<KMBAnnouncement> {
           );
         });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

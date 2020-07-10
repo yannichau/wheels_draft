@@ -1,14 +1,16 @@
-import 'all_route_index.dart';
+//import 'all_route_index.dart';
 import 'package:flutter/material.dart';
-import 'dart:async' show Future;
-import 'dart:convert';
+//import 'dart:async' show Future;
+//import 'dart:convert';
 //import 'package:http/http.dart' as http;
 import 'kmb_eta.dart';
 import 'kmb_list_stops_model.dart';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
-import 'package:localstorage/localstorage.dart';
+
+///////// DATABASE PACKAGES /////////
+//import 'dart:io';
+//import 'package:path_provider/path_provider.dart';
+//import 'package:path/path.dart';
+//import 'package:localstorage/localstorage.dart';
 
 class KMBListStops extends StatefulWidget {
   final String route;
@@ -28,7 +30,7 @@ class KMBListStops extends StatefulWidget {
   _KMBListStopsState createState() => _KMBListStopsState();
 }
 
-class _KMBListStopsState extends State<KMBListStops> {
+class _KMBListStopsState extends State<KMBListStops> with AutomaticKeepAliveClientMixin{
 
   //////////LOCAL STORAGE/////////
   //Future<ListStops> _futureListStops;
@@ -93,4 +95,7 @@ class _KMBListStopsState extends State<KMBListStops> {
         },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -26,7 +26,7 @@ class NWFBStopService {
   }
 
   Future<NWFBStopAPI> getNWFBStopsFromAPI(String stopID) async {
-    print("call from api");
+    print("call from nwfbstop api");
     NWFBStopAPI nwfbStop = await fetchNWFBStopAPI(stopID);
     nwfbStop.fromCache = false;
     //Future.delayed(Duration(milliseconds: 100));
@@ -35,7 +35,7 @@ class NWFBStopService {
   }
 
   Future<NWFBStopAPI> getNWFBStopsFromCache(String stopID) async {
-    print("call from cache");
+    print("call from nwfbstop cache");
     await storage.ready;
     Map <String, dynamic> data = storage.getItem("nwfbstop"+stopID);
     print(data);
@@ -77,6 +77,11 @@ class NWFBStopAPI {
       data: NWFBStopData.fromJson(json["data"]),
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    "data": data.toJson(),
+  };
+
 }
 
 class NWFBStopData {
@@ -91,6 +96,11 @@ class NWFBStopData {
     nameEN = json["name_en"];
     nameTC = json["name_tc"];
   }
+
+  Map<String, dynamic> toJson() => {
+    "name_en": nameEN,
+    "name_tc": nameTC,
+  };
 
 }
 
@@ -157,15 +167,19 @@ class _NWFBStopState extends State<NWFBStop> with AutomaticKeepAliveClientMixin{
   */
 
   @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
-    if (nwfbStop.data.nameTC != null) {
+    if (nwfbStop != null) {
       String stopNameTC = nwfbStop.data.nameTC;
-      return Text(stopNameTC);
+      return Text(
+        stopNameTC
+      );
     } 
     return Container();
   }
 
-  @override
-  bool get wantKeepAlive => true;
+
 
 }

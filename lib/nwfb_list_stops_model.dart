@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
 import 'dart:async' show Future;
 import 'dart:convert';
+import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 
@@ -24,7 +25,7 @@ class NWFBLSService {
   }
 
   Future<NWFBAPI> getNWFBLSFromAPI(String route, String bound, String operator) async {
-    print("call from api");
+    print("call from nwfbroute api");
     NWFBAPI nwfbLS = await fetchNWFBAPI(route, bound, operator);
     nwfbLS.fromCache = false;
     //Future.delayed(Duration(milliseconds: 100));
@@ -33,7 +34,7 @@ class NWFBLSService {
   }
 
   Future<NWFBAPI> getNWFBLSFromCache(String route, String bound, String operator) async {
-    print("call from cache");
+    print("call from nwfbroute cache");
     await storage.ready;
     Map <String, dynamic> data = storage.getItem("nwfbroute"+route+"bound"+bound+"operator"+operator);
     print(data);
@@ -48,13 +49,15 @@ class NWFBLSService {
 
   Future<NWFBAPI> fetchNWFBAPI(String route, String bound, String operator) async {
     operator.toUpperCase();
+    /*
     String boundMod;
     if (bound == '1') {
       boundMod = "outbound";
     } else if (bound == '2') {
       boundMod = "inbound";
     }
-    String link = "https://rt.data.gov.hk/v1/transport/citybus-nwfb/route-stop/" + operator + "/" + route + "/" + boundMod;
+    */
+    String link = "https://rt.data.gov.hk/v1/transport/citybus-nwfb/route-stop/" + operator + "/" + route + "/" + bound;
     print(link);
     final response = await http.get(link);
 
@@ -75,7 +78,7 @@ class NWFBAPI {
   NWFBAPI({this.routeStopsList, this.fromCache});
 
   factory NWFBAPI.fromJson(Map<String, dynamic> json) {
-    print("start API");
+    //print("start API");
     var list = json["data"] as List;
     print(list.runtimeType);
 
@@ -86,6 +89,11 @@ class NWFBAPI {
       routeStopsList: amendedList,
     );
   }
+
+  Map<String, dynamic> toJson() => { 
+    "data": new List<dynamic>.from(routeStopsList.map((x) => x.toJson())),
+  };
+
 }
 
 class NWFBRouteStops {
@@ -118,4 +126,14 @@ class NWFBRouteStops {
     stop = json["stop"];
     dataTimeStamp = json["data_timestamp"];
   }
+
+  Map<String, dynamic> toJson() => {
+    "co": co,
+    "route": route,
+    "dir": dir,
+    "seq": seq,
+    "stop": stop,
+    "data_timestamp": dataTimeStamp,
+  };
+
 }
