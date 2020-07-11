@@ -127,6 +127,10 @@ class _NWFBListStopsState extends State<NWFBListStops> {
           child: ExpansionTile(
             leading: Text("${index + 1}"),
             title: NWFBStop(stopID: nwfbLS.routeStopsList[index].stop),
+            trailing: new IconButton(
+              icon: new Icon(Icons.favorite),
+              onPressed: () { /* Your code */ }, //TODO:
+            ),
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 55.0, bottom: 30.0),

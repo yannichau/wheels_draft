@@ -62,15 +62,15 @@ class _KMBListStopsState extends State<KMBListStops> with AutomaticKeepAliveClie
   }
 
 
-  Text _removeUnknown(String stop) {
-    print(stop);
+  Text _removeUnknown(String stop) { //TODO: Not working!
+    //print(stop);
     // '埗' '匯' '邨'
     var estate = '\ue473';
     if (stop.contains(estate)) {
-      print("wow");
+      //print("wow");
       stop.replaceAll("\ue473",'邨');
     }
-    print(stop);
+    //print(stop);
     return Text(stop);
   }
 
@@ -90,6 +90,10 @@ class _KMBListStopsState extends State<KMBListStops> with AutomaticKeepAliveClie
             child: ExpansionTile(
               leading: Text("${index + 1}"),
               title: _removeUnknown(kmbLS.data.routeStopsList[index].cName), // why is this not working?
+              trailing: new IconButton(
+                icon: new Icon(Icons.favorite),
+                onPressed: () { /* Your code */ }, //TODO:
+              )
             ),
           );
         },

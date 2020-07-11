@@ -2164,9 +2164,9 @@
         },
         {
             "route_no": "2F",
-            "ori_tc": "長沙灣",
+            "ori_tc": "慈雲山（北）",
             "direction": "↔",
-            "dest_tc": "慈雲山（北）",
+            "dest_tc": "長沙灣",
             "remarks_tc": "",
             "fare": "$ 5.8",
             "tag": "",

@@ -19,8 +19,8 @@ class KMBLSService {
 
   void saveKMBLS(String route, String serviceType, String bound, ListStops kmbLS) async {
     await storage.ready;
-    storage.setItem("kmbroute"+route+"bound"+bound, kmbLS);
-    print("saved item as " + "kmbroute"+route+"bound"+bound);
+    storage.setItem("kmbroute"+route+"bound"+bound+"serviceType"+serviceType, kmbLS);
+    print("saved item as " + "kmbroute"+route+"bound"+bound+"serviceType"+serviceType);
   }
 
   Future<ListStops> getKMBLS(String route, String serviceType, String bound) async {
@@ -35,31 +35,33 @@ class KMBLSService {
   Future<ListStops> getKMBLSFromAPI(String route, String serviceType, String bound) async {
     print("call from api");
     ListStops kmbLS;
+    /*
     if (serviceType == null || serviceType == "1") { //NEED TO DEAL WITH SPECIAL ROUTES LATER //TODO:
       kmbLS = await fetchListStops(route, "1", bound);
       kmbLS.fromCache = false;
       saveKMBLS(route, serviceType, bound, kmbLS);
       return kmbLS;
     } else {
+    */
       kmbLS = await fetchListStops(route, serviceType, bound); 
       kmbLS.fromCache = false;
       //Future.delayed(Duration(milliseconds: 100));
       saveKMBLS(route, serviceType, bound, kmbLS);
       return kmbLS;
-    }    
+    //}    
   }
 
   Future<ListStops> getKMBLSFromCache(String route, String serviceType, String bound) async {
     print("call from cache");
     await storage.ready;
-    Map <String, dynamic> data = storage.getItem("kmbroute"+route+"bound"+bound);
+    Map <String, dynamic> data = storage.getItem("kmbroute"+route+"bound"+bound+"serviceType"+serviceType);
     print(data);
     if (data == null) {
       return null;
     }
     ListStops kmbLS = ListStops.fromJson(data);
     kmbLS.fromCache = true;
-    print("loaded item as " + "kmbroute"+route+"bound"+bound);
+    print("loaded item as " + "kmbroute"+route+"bound"+bound+"serviceType"+serviceType);
     return kmbLS;
   }
 

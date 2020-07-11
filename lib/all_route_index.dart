@@ -63,7 +63,7 @@ class AllRouteIndex extends StatefulWidget {
   _AllRouteIndexState createState() => _AllRouteIndexState();
 }
 
-class _AllRouteIndexState extends State<AllRouteIndex> {
+class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveClientMixin{
   
   //////////DEFINE VARIABLES//////////
   List<AllRoute> _routesForDisplay = List<AllRoute>();
@@ -124,6 +124,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
     //print("operator: " + operator);
     if (operator == "kmb" || operator == "lwb") {
       setState(() {
+      Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -132,6 +133,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
       );
       });
     } else if (operator == "ctb" || operator == "nwfb") {
+      Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -142,6 +144,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
       );
     } else { //jointly operated services
     setState(() {
+      Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -150,6 +153,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
       );
       });
     }
+    _stopSearching();
   }
 
 ///////////FOR SEARCH QUERIES//////////
@@ -260,10 +264,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
 }
 
 
-
-  
   //////////MAIN//////////
-
   @override
   void initState() {
     super.initState();
@@ -273,8 +274,10 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
   bool _isSearching = false;
 
   //Identifyinh routes with multiple serviceTypeS
-  String prevRoute;
+  String prevRoute = "kmb";
   String currentRoute;
+  String prevOp = "1";
+  String currentOp;
   num serviceType;
 
   @override
@@ -298,13 +301,19 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
               itemBuilder: (context, index) {
 
                 currentRoute = _routesForDisplay[index].routeNo;
+                currentOp = _routesForDisplay[index].operatorHK;
+                print("operator: "+ prevOp + currentOp);
                 ////////// FIX SPECIAL ROUTES LATER //////////TODO:
-                if (currentRoute == prevRoute) {
+                if (currentRoute == prevRoute && currentOp == prevOp) {
+                  print("servicetype incremented");
                   serviceType += 1;
                 } else {
                   serviceType = 1;
                 }
+                print("route: "+ currentRoute);
+                print("serviceType: "+ "${serviceType}");
                 prevRoute = currentRoute;
+                prevOp = currentOp;
 
                 return _listItem(index);// - 1);
               },
@@ -359,6 +368,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
               color: Colors.grey[600],
             )),
         children: <Widget>[
+          Text("車費💸: " + _routesForDisplay[index].fareDollar),
           Align(
               child: Column(children: [
             _availableDestinations(
@@ -404,5 +414,6 @@ class _AllRouteIndexState extends State<AllRouteIndex> {
     return Column();
   }
 
-  
+  @override
+  bool get wantKeepAlive => true;
 }
