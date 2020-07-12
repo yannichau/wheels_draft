@@ -47,7 +47,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 30,
+                      fontSize: 40,
                     ),
                   ),
                   Text(

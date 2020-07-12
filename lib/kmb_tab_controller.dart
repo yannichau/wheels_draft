@@ -11,6 +11,8 @@ class KMBTabs extends StatefulWidget {
   final String oriTC;
   final String destTC;
   final String serviceType;
+  final bool isSearching;
+  final bool isCircular;
 
   KMBTabs({
     @required this.route, 
@@ -18,6 +20,8 @@ class KMBTabs extends StatefulWidget {
     @required this.bound, 
     @required this.oriTC,
     @required this.destTC,
+    @required this.isSearching,
+    @required this.isCircular,
     Key key,
   }): super(key: key);
 
@@ -41,12 +45,28 @@ class _KMBTabsState extends State<KMBTabs> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
+  String _returnSymbol(bool isCircular) {
+    if (isCircular) {
+      return " ↺ ";
+    }
+    return " → ";
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        leading: new IconButton(
+          icon: new BackButtonIcon(),
+          onPressed: () {
+             Navigator.pop(context);
+             if (widget.isSearching) {
+              Navigator.pop(context);
+             }
+          }, 
+        ),
         backgroundColor: Colors.red,
-        title: new Text(widget.route + " " + widget.oriTC + " → " + widget.destTC),
+        title: new Text(widget.route + " " + widget.oriTC + _returnSymbol(widget.isCircular) + widget.destTC),
         bottom: TabBar(
           controller: kmbController,
           tabs: <Tab>[

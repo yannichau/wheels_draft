@@ -120,40 +120,36 @@ class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveCl
     return "";
   }
 
-  void _returnStops(String route, String serviceType, String bound, String operator, String oriTC, String destTC) {
+  void _returnStops(String route, String serviceType, String bound, String operator, String oriTC, String destTC, bool isCircular) {
     //print("operator: " + operator);
     if (operator == "kmb" || operator == "lwb") {
       setState(() {
-      Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => KMBTabs(
-                route: route, serviceType: serviceType, bound: bound, oriTC: oriTC, destTC: destTC,)),
+                route: route, serviceType: serviceType, bound: bound, oriTC: oriTC, destTC: destTC,isSearching: _isSearching, isCircular: isCircular,)),
       );
       });
     } else if (operator == "ctb" || operator == "nwfb") {
-      Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => NWFBTabs(
-                route: route, bound: bound, oriTC: oriTC, destTC: destTC, operator: operator,
+                route: route, bound: bound, oriTC: oriTC, destTC: destTC, operator: operator,  isSearching: _isSearching, 
             )
         ),
       );
     } else { //jointly operated services
     setState(() {
-      Navigator.pop(context);
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => KMBTabs(
-                route: route, serviceType: serviceType, bound: bound, oriTC: oriTC, destTC: destTC,)),
+                route: route, serviceType: serviceType, bound: bound, oriTC: oriTC, destTC: destTC, isSearching: _isSearching, isCircular: isCircular)),
       );
       });
     }
-    _stopSearching();
   }
 
 ///////////FOR SEARCH QUERIES//////////
@@ -388,26 +384,28 @@ class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveCl
   }
 
   Column _availableDestinations(String type, String org, String dest, String direction, num serviceType, String route, String operator) {
-    //print(type);
-    //print(org);
-    //print(dest);
-    //print(direction);
+
+    bool isCircular = false;
+    if (direction == "↺") {
+      isCircular = true;
+    }
+
     if (type == "one_way" || type == "circular") {
       return Column(children: [
         OutlineButton(
           child: Text(org + " " + direction + " " + dest),
-          onPressed: () => _returnStops(route, "${serviceType}", "1", operator, org, dest),
+          onPressed: () => _returnStops(route, "${serviceType}", "1", operator, org, dest, isCircular),
         ),
       ]);
     } else if (type == "bidirectional") {
       return Column(children: [
         OutlineButton(
           child: Text(org + " → " + dest),
-          onPressed: () => _returnStops(route, "${serviceType}", "1", operator, org, dest),
+          onPressed: () => _returnStops(route, "${serviceType}", "1", operator, org, dest, isCircular),
         ),
         OutlineButton(
           child: Text(dest + " → " + org),
-          onPressed: () => _returnStops(route, "${serviceType}", "2", operator, dest, org), //reversed direction here
+          onPressed: () => _returnStops(route, "${serviceType}", "2", operator, dest, org, isCircular), //reversed direction here
         ),
       ]);
     }

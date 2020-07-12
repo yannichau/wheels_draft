@@ -35,20 +35,10 @@ class KMBLSService {
   Future<ListStops> getKMBLSFromAPI(String route, String serviceType, String bound) async {
     print("call from api");
     ListStops kmbLS;
-    /*
-    if (serviceType == null || serviceType == "1") { //NEED TO DEAL WITH SPECIAL ROUTES LATER //TODO:
-      kmbLS = await fetchListStops(route, "1", bound);
-      kmbLS.fromCache = false;
-      saveKMBLS(route, serviceType, bound, kmbLS);
-      return kmbLS;
-    } else {
-    */
-      kmbLS = await fetchListStops(route, serviceType, bound); 
-      kmbLS.fromCache = false;
-      //Future.delayed(Duration(milliseconds: 100));
-      saveKMBLS(route, serviceType, bound, kmbLS);
-      return kmbLS;
-    //}    
+    kmbLS = await fetchListStops(route, serviceType, bound); 
+    kmbLS.fromCache = false;
+    saveKMBLS(route, serviceType, bound, kmbLS);
+    return kmbLS; 
   }
 
   Future<ListStops> getKMBLSFromCache(String route, String serviceType, String bound) async {

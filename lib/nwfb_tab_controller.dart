@@ -9,6 +9,7 @@ class NWFBTabs extends StatefulWidget {
   final String oriTC;
   final String destTC;
   final String operator;
+  final bool isSearching;
 
   NWFBTabs({
     @required this.route, 
@@ -16,6 +17,7 @@ class NWFBTabs extends StatefulWidget {
     @required this.oriTC,
     @required this.destTC,
     @required this.operator,
+    @required this.isSearching,
     Key key,
   }): super(key: key);
 
@@ -43,6 +45,15 @@ class _NWFBTabsState extends State<NWFBTabs> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        leading: new IconButton(
+          icon: new BackButtonIcon(),
+          onPressed: () {
+             Navigator.pop(context);
+             if (widget.isSearching) {
+              Navigator.pop(context);
+             }
+          },
+        ),
         backgroundColor: Colors.purple,
         title: new Text(widget.route + " " + widget.oriTC + " → " + widget.destTC),
         bottom: TabBar(

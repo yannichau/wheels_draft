@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 //import 'package:http/http.dart' as http;
 import 'kmb_eta.dart';
 import 'kmb_list_stops_model.dart';
+import 'main_fav_model.dart';
 
 ///////// DATABASE PACKAGES /////////
 //import 'dart:io';
@@ -36,15 +37,15 @@ class _KMBListStopsState extends State<KMBListStops> with AutomaticKeepAliveClie
   //Future<ListStops> _futureListStops;
 
 
-  //NEW STUFF
+  ///////// STORAGE FIR ROUTES//////////
   ListStops kmbLS;
-  KMBLSService service = KMBLSService();
+  KMBLSService kmbLSService = KMBLSService();
   Exception e;
 
   void _loadKMBLS(String route, String serviceType, String bound) async {
     print("route:" + route + ", serviceType:" + serviceType + ", bound:" + bound);
     try {
-      ListStops thekmbLS = await service.getKMBLS(route, serviceType, bound);
+      ListStops thekmbLS = await kmbLSService.getKMBLS(route, serviceType, bound);
       setState(() {
         kmbLS = thekmbLS;
       });
@@ -54,6 +55,11 @@ class _KMBListStopsState extends State<KMBListStops> with AutomaticKeepAliveClie
       });
     }
   }
+
+  ///////// STORAGE FOR FAVOURITES //////////
+  FavStopsCache favRoute;
+  FavStopsService favStopsService = FavStopsService();
+  Exception fE;
 
   @override
   void initState() {
@@ -92,7 +98,9 @@ class _KMBListStopsState extends State<KMBListStops> with AutomaticKeepAliveClie
               title: _removeUnknown(kmbLS.data.routeStopsList[index].cName), // why is this not working?
               trailing: new IconButton(
                 icon: new Icon(Icons.favorite),
-                onPressed: () { /* Your code */ }, //TODO:
+                onPressed: () { //TODO:
+                  favStopsService.saveFav(kmbLS.data.routeStopsList[index].route, kmbLS.data.routeStopsList[index].bound, "kmb", kmbLS.data.routeStopsList[index].bsiCode, kmbLS.data.routeStopsList[index].seq, kmbLS.data.routeStopsList[index].serviceType, favRoute);
+                }, 
               )
             ),
           );
