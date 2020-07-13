@@ -10,49 +10,35 @@ class AllRouteFav extends StatefulWidget {
 
 class _AllRouteFavState extends State<AllRouteFav> {
 
-  FavStopsCache favStopsInterface;
-  FavStopsService favStopsListService = FavStopsService();
-  Exception fE;
-
-  void _loadFavList() async {
-    print("Load Fav List");
-    try {
-      FavStopsCache thefavStopsInterface = await favStopsListService.readAllFav();
-      setState(() {
-        favStopsInterface = thefavStopsInterface;
-      });
-    } catch(err) {
-      setState(() {
-        fE = err;
-      });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _loadFavList();
-  }
-
-
   @override
   Widget build(BuildContext context) {
-    if (favStopsInterface == null) {
-      return LinearProgressIndicator(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("我的最愛"),
         backgroundColor: Colors.indigo,
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
-      );
-    }
-    return ListView.builder(
-        key:widget._scaffoldKey,
-        itemCount: favStopsInterface.favStopsList.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ExpansionTile(
-              title: Text(favStopsInterface.favStopsList[index].stopCode),
-            ),
-          );
-        },
+      ),
+      body: FutureBuilder(
+        future: DBProvider.db.getAllFavStops(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: LinearProgressIndicator(),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: snapshot.data.length, // what the hell?
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ExpansionTile(
+                    title: Text(snapshot.data[index].stopCode),
+                  ),
+                );
+              },
+            );
+          }
+        }
+      )
     );
   }
+  
 }

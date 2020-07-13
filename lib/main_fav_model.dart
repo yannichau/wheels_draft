@@ -1,79 +1,19 @@
-//import 'package:flutter/material.dart';
-import 'dart:async' show Future;
-//import 'dart:collection';
+import 'dart:async';
+import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 import 'dart:convert';
-//import 'package:flutter/widgets.dart';
-import 'package:localstorage/localstorage.dart';
+//import 'package:dio/dio.dart';
 
-class FavStopsService {
-  static LocalStorage storage = new LocalStorage("favStops");
-  //var stopwatch = new Stopwatch()..start();
+List<FavStop> favStopListFromJson(String str) =>
+    List<FavStop>.from(json.decode(str).map((x) => FavStop.fromJson(x)));
 
-  void saveFav(String route, String bound, String operator, String stopCode, String seq, String serviceType, FavStopsCache favList) async {
-    await storage.ready;
-    storage.setItem("favRoute"+route+"bound"+bound+"operator"+operator+"stopCode"+stopCode+"seq"+seq+"serviceType"+serviceType, favList);
-    print("saved item as " + "favRoute"+route+"bound"+bound+"operator"+operator+"stopCode"+stopCode+"seq"+seq+"serviceType"+serviceType);
-  }
+String favStopListToJson(List<FavStop> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-  Future<FavStopsCache> getFavListFromCache(String route, String bound, String operator, String stopCode, String seq, String serviceType) async {
-    print("call from nwfbroute cache");
-    await storage.ready;
-    Map <String, dynamic> data = storage.getItem("favRoute"+route+"bound"+bound+"operator"+operator+"stopCode"+stopCode+"seq"+seq+"serviceType"+serviceType);
-    print(data);
-    if (data == null) {
-      return null;
-    }
-    FavStopsCache favList = FavStopsCache.fromJson(data);
-    favList.fromCache = true;
-    print("loaded item as " + "favRoute"+route+"bound"+bound+"operator"+operator+"stopCode"+stopCode+"seq"+seq+"serviceType"+serviceType);
-    return favList;
-  }
-
-  Future <FavStopsCache> readAllFav() async {
-    try {
-      print("read all favourites");
-      await storage.ready;
-      String jsonString = storage.toString();
-      print("readString");
-      final jsonMap = jsonDecode(jsonString);
-      print("decodedFavString");
-      FavStopsCache favs = jsonMap.map((parsedJson) => FavStopsCache.fromJson(parsedJson));
-      print("parsedJSONasobject");
-      return favs;
-    } catch(e) {
-      print ("can't fetch from favourites storage!");
-    }
-    return null;
-  }
-
-}
-
-class FavStopsCache {
-  List<FavStops> favStopsList;
-  bool fromCache;
-
-  FavStopsCache({this.favStopsList, this.fromCache});
-
-  factory FavStopsCache.fromJson(Map<String, dynamic> json) {
-    //print("start API");
-    var list = json["data"] as List;
-    print(list.runtimeType);
-
-    List<FavStops> amendedList = list.map((i) =>
-      FavStops.fromJson(i)). toList();
-
-    return new FavStopsCache(
-      favStopsList: amendedList,
-    );
-  }
-
-  Map<String, dynamic> toJson() => { 
-    "data": new List<dynamic>.from(favStopsList.map((x) => x.toJson())),
-  };
-
-}
-
-class FavStops {
+class FavStop {
+  String id; //operator+route+bound+stopcode+serviceType
   String operator;
   String route;
   String bound;
@@ -81,24 +21,100 @@ class FavStops {
   String serviceType;
   String seq;
 
-  FavStops({this.operator, this.route, this.bound, this.seq, this.stopCode, this.serviceType});
+  FavStop({
+    this.id,
+    this.operator,
+    this.route,
+    this.bound,
+    this.seq,
+    this.stopCode,
+    this.serviceType
+  });
 
-  FavStops.fromJson(Map<String, dynamic> json) {
-    operator = json["operator"];
-    route = json["route"];
-    bound = json["bound"];
-    stopCode = json["stopCode"];
-    serviceType = json["serviceType"];
-    seq = json["seq"];
+  FavStop.fromJson(Map<String, dynamic> json) {
+    id = json["ID"];
+    operator = json["Operator"];
+    route = json["Route"];
+    bound = json["Bound"];
+    seq = json["Seq"];
+    stopCode = json["StopCode"];
+    serviceType = json["ServiceType"];
   }
 
   Map<String, dynamic> toJson() => {
-    "operator": operator,
-    "route": route,
-    "bound": bound,
-    "seq": seq,
-    "stopCode": stopCode,
-    "serviceType": serviceType,
+    "ID": id,
+    "Operator": operator,
+    "Route": route,
+    "Bound": bound,
+    "Seq": seq,
+    "StopCode": stopCode,
+    "ServiceType": serviceType,
   };
-
 }
+
+
+class DBProvider {
+  static Database _database;
+  static final DBProvider db = DBProvider._();
+
+  DBProvider._();
+
+  Future<Database> get database async {
+    // If database exists, return database
+    if (_database != null) return _database;
+
+    // If database don't exists, create one
+    _database = await initDB();
+
+    return _database;
+  }
+
+  // Create the database and the FavStops table
+  initDB() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    final path = join(documentsDirectory.path, 'fav_stops.db');
+
+    return await openDatabase(path, version: 1, onOpen: (db) {},
+        onCreate: (Database db, int version) async {
+      await db.execute('CREATE TABLE FavStop('
+          'ID TEXT PRIMARY KEY,'
+          'Operator TEXT,'
+          'Route TEXT,'
+          'Bound TEXT,'
+          'Seq TEXT,'
+          'StopCode TEXT,'
+          'ServiceType TEXT'
+      ')');
+    });
+  }
+
+  // Insert employee on database
+  createFavstop(FavStop newFavStop) async {
+    await deleteAllFavStops();
+    final db = await database;
+    final res = await db.insert('FavStop', newFavStop.toJson());
+
+    return res;
+  }
+
+  // Delete all employees
+  Future<int> deleteAllFavStops() async {
+    final db = await database;
+    final res = await db.rawDelete('DELETE FROM FavStop');
+
+    return res;
+  }
+
+  Future<List<FavStop>> getAllFavStops() async {
+    final db = await database;
+    final res = await db.rawQuery("SELECT * FROM FAVSTOP");
+
+    List<FavStop> list =
+        res.isNotEmpty ? res.map((c) => FavStop.fromJson(c)).toList() : [];
+
+    return list;
+  }
+}
+
+
+

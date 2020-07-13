@@ -25,6 +25,7 @@ class _MainTabsState extends State<MainTabs>
     super.dispose();
   }
 
+  ////////// DETERMINES THE SELECTED TAB /////////
   tapped(int tappedIndex) {
     setState(() {
       index = tappedIndex;

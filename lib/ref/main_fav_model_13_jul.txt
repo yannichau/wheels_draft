@@ -1,0 +1,86 @@
+import 'package:flutter/material.dart';
+import 'dart:async' show Future;
+import 'dart:collection';
+import 'dart:convert';
+import 'package:flutter/widgets.dart';
+import 'package:localstorage/localstorage.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:file/file.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart';
+
+
+class FavoritesStorage {
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/WheelsFavourite.dat');
+  }
+
+  Future writeFavorites(List favoritesList) async {
+    final file = await _localFile;
+    // Read the file
+    String json = jsonEncode(favoritesList);
+    print("JSON writing to file: " + json);
+  return file.writeAsString(json, mode: FileMode.write);
+  }
+
+  Future readFavorites() async {
+    try {
+      final file = await _localFile;
+      // Read the file
+      String jsonString = await file.readAsString();
+      print("JSON reading from file: " + jsonString);
+      Iterable jsonMap = jsonDecode(jsonString);
+      List favs = jsonMap
+          .map((parsedJson) => FavStops.fromJson(parsedJson))
+          .toList();
+      return favs;
+    } catch (e) {
+      print('error');
+    }
+
+    return List();
+  }
+}
+
+class FavStops {
+  String operator;
+  String route;
+  String bound;
+  String stopCode;
+  String serviceType;
+  String seq;
+
+  FavStops(
+      {this.operator,
+      this.route,
+      this.bound,
+      this.seq,
+      this.stopCode,
+      this.serviceType});
+
+  FavStops.fromJson(Map<String, dynamic> json) {
+    operator = json["operator"];
+    route = json["route"];
+    bound = json["bound"];
+    stopCode = json["stopCode"];
+    serviceType = json["serviceType"];
+    seq = json["seq"];
+  }
+
+  Map<String, dynamic> toJson() => {
+        "operator": operator,
+        "route": route,
+        "bound": bound,
+        "seq": seq,
+        "stopCode": stopCode,
+        "serviceType": serviceType,
+      };
+}

@@ -1,0 +1,29 @@
+import 'package:wheels_draft/main_fav_model.dart';
+
+class StopFavs {
+
+  FavoritesStorage storage = FavoritesStorage();
+  List<FavStops> favorites = [];
+
+  Future<List<FavStops>> readAllFavorites() async {
+    favorites = await storage.readFavorites();
+    return favorites;
+  }
+
+  Future addFavorite(FavStops stop) async {
+    if (!favorites.any((p) => p.stopCode == stop.stopCode)) { //think about this later
+      favorites.add(stop);
+      await storage.writeFavorites(favorites);
+    }
+  }
+
+  Future removeFavorite(FavStops stop) async {
+    favorites.removeWhere((p) => p.stopCode == stop.stopCode); //maybe this isnt unique?
+
+    await storage.writeFavorites(favorites);
+  }
+
+  bool isFavorite(FavStops stop) {
+    return favorites.any((p) => p.stopCode == stop.stopCode); //huh?
+  }
+}

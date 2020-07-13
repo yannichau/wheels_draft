@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:wheels_draft/main_controller.dart';
+
 //import 'kmb_list_stops.dart';
-import 'all_route_index.dart';
+//import 'all_route_index.dart';
 
 
-void main() =>  runApp(MyApp());
+void main() async {
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -14,6 +18,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> { //only want to modify myappstate within this scope.
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
