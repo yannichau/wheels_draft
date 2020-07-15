@@ -1,0 +1,42 @@
+    /*
+    return new FutureBuilder<NWFBAPI>(
+            future: futureListStops,
+            builder: (context, snapshot) {
+            if (snapshot.hasData) {
+                print("pre-initialise");
+                List<NWFBRouteStops> list = snapshot.data.routeStopsList;
+                ListView myList = new ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: list.length,
+                  //itemExtent: 25,
+                  itemBuilder: (context, index) {
+                    print("stop: " + list[index].stop);
+                    return Card (
+                      child: ExpansionTile(
+                        leading: Text("${list[index].seq}"),
+                        title: NWFBStop(stopID: list[index].stop),
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left:55.0, bottom: 30.0),
+                            child: NWFBETA(
+                              route: list[index].route,
+                              operator: list[index].co,
+                              stopID: list[index].stop,
+                            ),
+                          )
+                        ],
+                      )
+                    );
+                  }
+                );
+                return myList;
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              return LinearProgressIndicator(
+                backgroundColor: Colors.orange,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+              );
+            }
+        );
+    */

@@ -114,15 +114,7 @@ class NWFBStop extends StatefulWidget {
 }
 
 class _NWFBStopState extends State<NWFBStop> with AutomaticKeepAliveClientMixin{
-  /*
-  Future<NWFBStopAPI> futureNWFBStopAPI;
 
-  @override
-  void initState() {
-    super.initState();
-    futureNWFBStopAPI = fetchListStops(widget.stopID);
-  }
-  */
 
   NWFBStopAPI nwfbStop;
   NWFBStopService service = NWFBStopService();
@@ -147,24 +139,6 @@ class _NWFBStopState extends State<NWFBStop> with AutomaticKeepAliveClientMixin{
     super.initState();
     _loadNWFBStops(widget.stopID);
   }
-
-  /*
-  @override
-  Widget build(BuildContext context) {
-    return new FutureBuilder<NWFBStopAPI> (
-      future: futureNWFBStopAPI,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-            String stopNameTC = snapshot.data.data.nameTC;
-            return Text(stopNameTC);
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
-        }
-        return Container();
-      },
-    );
-  }
-  */
 
   @override
   bool get wantKeepAlive => true;

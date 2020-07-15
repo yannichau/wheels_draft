@@ -33,10 +33,6 @@ class KMBListStops extends StatefulWidget {
 
 class _KMBListStopsState extends State<KMBListStops> with AutomaticKeepAliveClientMixin{
 
-  //////////LOCAL STORAGE/////////
-  //Future<ListStops> _futureListStops;
-
-
   ///////// STORAGE FIR ROUTES//////////
   ListStops kmbLS;
   KMBLSService kmbLSService = KMBLSService();
@@ -55,11 +51,6 @@ class _KMBListStopsState extends State<KMBListStops> with AutomaticKeepAliveClie
       });
     }
   }
-
-  ///////// STORAGE FOR FAVOURITES //////////
-  //FavStopsCache favRoute;
-  //FavStopsService favStopsService = FavStopsService();
-  //Exception fE;
 
   @override
   void initState() {
@@ -106,6 +97,7 @@ class _KMBListStopsState extends State<KMBListStops> with AutomaticKeepAliveClie
                     bound: kmbLS.data.routeStopsList[index].bound,
                     seq: kmbLS.data.routeStopsList[index].seq,
                     stopCode: kmbLS.data.routeStopsList[index].bsiCode,
+                    cName: kmbLS.data.routeStopsList[index].cName,
                     serviceType: kmbLS.data.routeStopsList[index].serviceType,
                   );
                   DBProvider.db.createFavstop(currentStop);

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'nwfb_stop.dart';
 import 'nwfb_eta.dart';
 import 'nwfb_list_stops_model.dart';
+import 'main_fav_model.dart';
 
 class NWFBListStops extends StatefulWidget {
   final String route;
@@ -27,15 +28,6 @@ class NWFBListStops extends StatefulWidget {
 }
 
 class _NWFBListStopsState extends State<NWFBListStops> {
-  /*
-  Future<NWFBAPI> futureListStops;
-
-  @override
-  void initState() {
-    super.initState();
-    futureListStops = fetchListStops(widget.route, widget.bound, widget.operator);
-  }
-  */
 
   //NEW STUFF
   NWFBAPI nwfbLS;
@@ -71,48 +63,6 @@ class _NWFBListStopsState extends State<NWFBListStops> {
   }
 
   Widget _listStops() {
-    /*
-    return new FutureBuilder<NWFBAPI>(
-            future: futureListStops,
-            builder: (context, snapshot) {
-            if (snapshot.hasData) {
-                print("pre-initialise");
-                List<NWFBRouteStops> list = snapshot.data.routeStopsList;
-                ListView myList = new ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: list.length,
-                  //itemExtent: 25,
-                  itemBuilder: (context, index) {
-                    print("stop: " + list[index].stop);
-                    return Card (
-                      child: ExpansionTile(
-                        leading: Text("${list[index].seq}"),
-                        title: NWFBStop(stopID: list[index].stop),
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left:55.0, bottom: 30.0),
-                            child: NWFBETA(
-                              route: list[index].route,
-                              operator: list[index].co,
-                              stopID: list[index].stop,
-                            ),
-                          )
-                        ],
-                      )
-                    );
-                  }
-                );
-                return myList;
-              } else if (snapshot.hasError) {
-                return Text("${snapshot.error}");
-              }
-              return LinearProgressIndicator(
-                backgroundColor: Colors.orange,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-              );
-            }
-        );
-    */
     if (nwfbLS == null) {
       return LinearProgressIndicator(
         backgroundColor: Colors.orange,
@@ -129,7 +79,21 @@ class _NWFBListStopsState extends State<NWFBListStops> {
             title: NWFBStop(stopID: nwfbLS.routeStopsList[index].stop),
             trailing: new IconButton(
               icon: new Icon(Icons.favorite),
-              onPressed: () { /* Your code */ }, //TODO:
+              onPressed: () {
+                 FavStop currentStop = FavStop(
+                    id: nwfbLS.routeStopsList[index].co+nwfbLS.routeStopsList[index].route+nwfbLS.routeStopsList[index].dir+nwfbLS.routeStopsList[index].stop+"${nwfbLS.routeStopsList[index].seq}",
+                    operator:nwfbLS.routeStopsList[index].co,
+                    route: nwfbLS.routeStopsList[index].route,
+                    bound: nwfbLS.routeStopsList[index].dir,
+                    seq: "${nwfbLS.routeStopsList[index].seq}",
+                    stopCode: nwfbLS.routeStopsList[index].stop,
+                    cName: nwfbLS.routeStopsList[index].stop,
+                    serviceType: "null",
+                  );
+                  DBProvider.db.createFavstop(currentStop);
+                  print("added ${nwfbLS.routeStopsList[index].stop} favourite to database");
+                  print(nwfbLS.routeStopsList[index].co);
+              }, 
             ),
             children: [
               Padding(

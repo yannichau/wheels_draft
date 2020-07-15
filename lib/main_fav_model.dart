@@ -18,6 +18,7 @@ class FavStop {
   String route;
   String bound;
   String stopCode;
+  String cName;
   String serviceType;
   String seq;
 
@@ -28,6 +29,7 @@ class FavStop {
     this.bound,
     this.seq,
     this.stopCode,
+    this.cName,
     this.serviceType
   });
 
@@ -38,6 +40,7 @@ class FavStop {
     bound = json["Bound"];
     seq = json["Seq"];
     stopCode = json["StopCode"];
+    cName = json["Name_TC"];
     serviceType = json["ServiceType"];
   }
 
@@ -48,6 +51,7 @@ class FavStop {
     "Bound": bound,
     "Seq": seq,
     "StopCode": stopCode,
+    "Name_TC": cName, //is stopID for NWFB routes
     "ServiceType": serviceType,
   };
 }
@@ -83,6 +87,7 @@ class DBProvider {
           'Bound TEXT,'
           'Seq TEXT,'
           'StopCode TEXT,'
+          'Name_TC TEXT,'
           'ServiceType TEXT'
       ')');
     });
@@ -90,7 +95,7 @@ class DBProvider {
 
   // Insert employee on database
   createFavstop(FavStop newFavStop) async {
-    await deleteAllFavStops();
+    //await deleteAllFavStops();
     final db = await database;
     final res = await db.insert('FavStop', newFavStop.toJson());
 
@@ -101,6 +106,8 @@ class DBProvider {
   Future<int> deleteAllFavStops() async {
     final db = await database;
     final res = await db.rawDelete('DELETE FROM FavStop');
+
+    //await db.delete('FavStop');
 
     return res;
   }

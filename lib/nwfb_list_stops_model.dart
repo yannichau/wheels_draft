@@ -106,18 +106,6 @@ class NWFBRouteStops {
 
   NWFBRouteStops({this.co, this.route, this.dir, this.seq, this.stop, this.dataTimeStamp});
 
-  /*
-  factory NWFBRouteStops.fromJson(Map<String, dynamic> json) {
-    return new NWFBRouteStops(
-      co: json["co"] as String,
-      route: json["route"] as String,
-      dir: json["dir"] as String,
-      seq: json["seq"] as String,
-      stop: json["stop"] as String,
-      dataTimeStamp: json["data_timestamp"] as String,
-    );
-  }
-  */
   NWFBRouteStops.fromJson(Map<String, dynamic> json) {
     co = json["co"];
     route = json["route"];
