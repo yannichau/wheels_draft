@@ -8,7 +8,7 @@ class NWFBTabs extends StatefulWidget {
   final String bound;
   final String oriTC;
   final String destTC;
-  final String operator;
+  final String operatorHK;
   final bool isSearching;
 
   NWFBTabs({
@@ -16,7 +16,7 @@ class NWFBTabs extends StatefulWidget {
     @required this.bound, 
     @required this.oriTC,
     @required this.destTC,
-    @required this.operator,
+    @required this.operatorHK,
     @required this.isSearching,
     Key key,
   }): super(key: key);
@@ -85,7 +85,7 @@ class _NWFBTabsState extends State<NWFBTabs> with SingleTickerProviderStateMixin
       body: new TabBarView (
         controller: nwfbController,
         children: <Widget>[
-          new first.NWFBListStops(route: widget.route, bound: widget.bound, oriTC: widget.oriTC, destTC: widget.destTC, operator: widget.operator),
+          new first.NWFBListStops(route: widget.route, bound: widget.bound, oriTC: widget.oriTC, destTC: widget.destTC, operatorHK: widget.operatorHK),
           new second.NWFBTimetable(),
         ],
       )

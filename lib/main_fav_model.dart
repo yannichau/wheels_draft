@@ -13,8 +13,8 @@ String favStopListToJson(List<FavStop> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class FavStop {
-  String id; //operator+route+bound+stopcode+serviceType
-  String operator;
+  String id; //operatorHK+route+bound+stopcode+serviceType
+  String operatorHK;
   String route;
   String bound;
   String stopCode;
@@ -24,7 +24,7 @@ class FavStop {
 
   FavStop({
     this.id,
-    this.operator,
+    this.operatorHK,
     this.route,
     this.bound,
     this.seq,
@@ -35,7 +35,7 @@ class FavStop {
 
   FavStop.fromJson(Map<String, dynamic> json) {
     id = json["ID"];
-    operator = json["Operator"];
+    operatorHK = json["OperatorHK"];
     route = json["Route"];
     bound = json["Bound"];
     seq = json["Seq"];
@@ -46,7 +46,7 @@ class FavStop {
 
   Map<String, dynamic> toJson() => {
     "ID": id,
-    "Operator": operator,
+    "OperatorHK": operatorHK,
     "Route": route,
     "Bound": bound,
     "Seq": seq,
@@ -82,7 +82,7 @@ class DBProvider {
         onCreate: (Database db, int version) async {
       await db.execute('CREATE TABLE FavStop('
           'ID TEXT PRIMARY KEY,'
-          'Operator TEXT,'
+          'OperatorHK TEXT,'
           'Route TEXT,'
           'Bound TEXT,'
           'Seq TEXT,'
@@ -121,7 +121,19 @@ class DBProvider {
 
     return list;
   }
+
+    Future<void> deleteFavStop(String id) async {
+    final db = await database;
+    await db.delete(
+      'FavStop',
+      where: "ID = ?",
+      whereArgs: [id],
+    );
+    print("deleted");
+  }
 }
+
+
 
 
 

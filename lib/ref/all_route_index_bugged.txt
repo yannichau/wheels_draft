@@ -1,0 +1,457 @@
+import 'package:flutter/material.dart';
+import 'package:wheels_draft/kmb_tab_controller.dart';
+import 'nwfb_tab_controller.dart';
+
+import 'dart:async' show Future;
+import 'package:flutter/services.dart' show rootBundle;
+import 'dart:convert';
+import 'dart:core';
+//import 'package:url_launcher/url_launcher.dart';
+
+class RouteFile {
+  List<AllRoute> allRouteList;
+
+  RouteFile({this.allRouteList});
+
+  factory RouteFile.fromJson(Map<String, dynamic> json) {
+    var list = json["routes"] as List;
+    print(list.runtimeType);
+
+    List<AllRoute> amendedList = list.map((i) => AllRoute.fromJson(i)).toList();
+
+    return new RouteFile(
+      allRouteList: amendedList,
+    );
+  }
+}
+
+class AllRoute {
+  String routeNo;
+  String oriTC;
+  String directionSym;
+  String destTC;
+  String remarksTC;
+  String fareDollar;
+  String tagSpecial;
+  String operatorHK;
+  String routeType;
+  String lantauTag;
+
+  AllRoute(
+      {this.routeNo,
+      this.oriTC,
+      this.directionSym,
+      this.destTC,
+      this.remarksTC,
+      this.fareDollar,
+      this.routeType,
+      this.lantauTag,
+      this.operatorHK,
+      this.tagSpecial});
+
+  AllRoute.fromJson(Map<String, dynamic> json) {
+    routeNo = json["route_no"];
+    oriTC = json["ori_tc"];
+    directionSym = json["direction"];
+    destTC = json["dest_tc"];
+    remarksTC = json["remarks_tc"];
+    fareDollar = json["fare"];
+    tagSpecial = json["tag"];
+    operatorHK = json["operator"];
+    routeType = json["route_type"];
+    lantauTag = json["lantau_tag"];
+  }
+}
+
+class AllRouteIndex extends StatefulWidget {
+  AllRouteIndex({Key key}) : super(key: key);
+
+  @override
+  _AllRouteIndexState createState() => _AllRouteIndexState();
+}
+
+class _AllRouteIndexState extends State<AllRouteIndex>
+    with AutomaticKeepAliveClientMixin {
+  //////////DEFINE VARIABLES//////////
+  List<AllRoute> _routesForDisplay = List<AllRoute>();
+  List<AllRoute> _routesUnfiltered = List<AllRoute>();
+  Future<RouteFile> _futureRouteFile;
+  static final GlobalKey<ScaffoldState> scaffoldKey =
+      new GlobalKey<ScaffoldState>();
+
+    //////////FUNCTIONS FOR RENDERING EXPANDING LIST TILES//////////
+
+  String _setImage(String operatorHK, String lantauTag) {
+    if (operatorHK == "lwb") {
+      return 'images/lwb.png';
+    } else if (operatorHK == "kmb") {
+      return 'images/kmb.png';
+    } else if (operatorHK == "nwfb") {
+      return 'images/nwfb.jpg';
+    } else if (operatorHK == "ctb") {
+      return 'images/ctb.png';
+    } else {
+      return 'images/joint.png';
+    }
+  }
+
+  Icon _setTagIcon(String tag, String lantauTag) {
+    if (lantauTag == "airport") {
+      return Icon(
+        Icons.flight_takeoff,
+      );
+    } else if (tag == "peak") {
+      return Icon(Icons.directions_run);
+    } else if (tag == "special") {
+      return Icon(Icons.priority_high);
+    } else if (tag == "racecourse") {
+      return Icon(Icons.monetization_on);
+    } else if (tag == "night") {
+      return Icon(
+        Icons.brightness_2,
+        color: Colors.deepPurple,
+      );
+    } else if (tag == "border") {
+      return Icon(Icons.leak_remove);
+    } else if (tag == "school") {
+      return Icon(Icons.school);
+    } else if (tag == "hst") {
+      return Icon(Icons.train);
+    }
+    return null;
+  }
+
+  String _setSubtitle(String remarks) {
+    if (remarks != null) {
+      return remarks;
+    }
+    return "";
+  }
+
+  void _returnStops(String route, String serviceType, String bound,
+      String operatorHK, String oriTC, String destTC, bool isCircular) {
+    //print("operatorHK: " + operatorHK);
+    if (operatorHK == "kmb" || operatorHK == "lwb") {
+      setState(() {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => KMBTabs(
+                    route: route,
+                    serviceType: serviceType,
+                    bound: bound,
+                    oriTC: oriTC,
+                    destTC: destTC,
+                    isSearching: _isSearching,
+                    isCircular: isCircular,
+                  )),
+        );
+      });
+    } else if (operatorHK == "ctb" || operatorHK == "nwfb") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => NWFBTabs(
+                  route: route,
+                  bound: bound,
+                  oriTC: oriTC,
+                  destTC: destTC,
+                  operatorHK: operatorHK,
+                  isSearching: _isSearching,
+                )),
+      );
+    } else {
+      //jointly operated services
+      setState(() {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => KMBTabs(
+                  route: route,
+                  serviceType: serviceType,
+                  bound: bound,
+                  oriTC: oriTC,
+                  destTC: destTC,
+                  isSearching: _isSearching,
+                  isCircular: isCircular)),
+        );
+      });
+    }
+  }
+
+  _listItem(index) {
+    return Card(
+      child: ExpansionTile(
+        leading: Container(
+          width: 60,
+          child: Column(
+            children: [
+              Image(
+                image: new AssetImage(_setImage(globalOperatorHK, globalLantauTag)),
+                height: 25,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: Text(globalRouteNo,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )),
+              )
+            ],
+          ),
+        ),
+        title: Text(
+          globalOriTC + 
+              " " +
+              globalDirectionSymbol +
+              " " +
+              globalDestTC,
+        ),
+        subtitle: Text(_setSubtitle(globalRemarksTC),
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey[600],
+            )),
+        children: <Widget>[
+          Text("車費💸: " + globalFareDollar),
+          Align(
+              child: Column(children: [
+            _availableDestinations(
+              globalRouteType,
+              globalOriTC,
+              globalDestTC,
+              globalDirectionSymbol,
+              serviceType,
+              globalRouteNo,
+              globalOperatorHK,
+            )
+          ])),
+        ],
+        trailing: _setTagIcon(globalTagSpecial, globalLantauTag),
+      ),
+    );
+  }
+
+  Column _availableDestinations(String type, String org, String dest,
+      String direction, num serviceType, String route, String operatorHK) {
+    bool isCircular = false;
+    if (direction == "↺") {
+      isCircular = true;
+    }
+
+    if (type == "one_way" || type == "circular") {
+      return Column(children: [
+        OutlineButton(
+          child: Text(org + " " + direction + " " + dest),
+          onPressed: () => _returnStops(
+              route, "${serviceType}", "1", operatorHK, org, dest, isCircular),
+        ),
+      ]);
+    } else if (type == "bidirectional") {
+      return Column(children: [
+        OutlineButton(
+          child: Text(org + " → " + dest),
+          onPressed: () => _returnStops(
+              route, "${serviceType}", "1", operatorHK, org, dest, isCircular),
+        ),
+        OutlineButton(
+          child: Text(dest + " → " + org),
+          onPressed: () => _returnStops(route, "${serviceType}", "2",
+              operatorHK, dest, org, isCircular), //reversed direction here
+        ),
+      ]);
+    }
+    return Column();
+  }
+
+
+  ///////////FOR SEARCH QUERIES//////////
+
+  _buildSearchBar() {
+    return TextField(
+      showCursor: true,
+      keyboardType: TextInputType.visiblePassword,
+      cursorColor: Colors.teal,
+      autofocus: true,
+      style: const TextStyle(color: Colors.white, fontSize: 20.0),
+      decoration: InputDecoration(
+        //labelText: "尋找路線",
+        hintText: "尋找路線",
+        hintStyle: const TextStyle(color: Colors.white30),
+        border: InputBorder.none,
+        //prefixIcon: Icon(Icons.search),
+        //border: OutlineInputBorder(
+        //    borderRadius: BorderRadius.all(Radius.circular(0.0)))
+      ),
+      onChanged: (text) {
+        text = text.toUpperCase();
+        setState(() {
+          _routesForDisplay = _routesUnfiltered.where((note) {
+            var routeNumber = note.routeNo.toUpperCase();
+            return routeNumber.startsWith(text);
+          }).toList();
+        });
+      },
+    );
+  }
+
+  void _startSearch() {
+    print("open search box");
+
+    ModalRoute.of(context)
+        .addLocalHistoryEntry(new LocalHistoryEntry(onRemove: _stopSearching));
+
+    setState(() {
+      _isSearching = true;
+    });
+  }
+
+  void _stopSearching() {
+    setState(() {
+      _isSearching = false;
+      _routesForDisplay = _routesUnfiltered;
+    });
+  }
+
+  _buildActions() {
+    if (!_isSearching) {
+      return <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: new IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: _startSearch,
+          ),
+        ),
+      ];
+    }
+  }
+
+  _buildTitle() {
+    return new InkWell(
+      onTap: () => scaffoldKey.currentState.openDrawer(),
+      child: new Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text("路線搜尋"),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<String> _loadRouteAsset() async {
+    return await rootBundle.loadString('assets/all_routes.json');
+  }
+
+  Future<RouteFile> _loadRouteList() async {
+    String jsonString = await _loadRouteAsset();
+    final jsonResponse = json.decode(jsonString);
+    RouteFile routeFile = new RouteFile.fromJson(jsonResponse);
+    print("route file");
+    print(routeFile);
+    setState(() {
+      _routesForDisplay = routeFile.allRouteList;
+      this._routesUnfiltered = _routesForDisplay;
+    });
+    return routeFile;
+  }
+
+  //////////DECLARW LOCAL VARIABLES /////////
+  String globalRouteNo;
+  String globalOriTC;
+  String globalDirectionSymbol;
+  String globalDestTC;
+  String globalRemarksTC;
+  String globalFareDollar;
+  String globalTagSpecial;
+  String globalOperatorHK;
+  String globalRouteType;
+  String globalLantauTag;
+
+  //////////MAIN//////////
+  @override
+  void initState() {
+    super.initState();
+    _futureRouteFile = _loadRouteList();
+  }
+
+  bool _isSearching = false;
+
+  //Identifyinh routes with multiple serviceTypeS
+  String prevRoute = "kmb";
+  String currentRoute;
+  String prevOp = "1";
+  String currentOp;
+  num serviceType;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: AppBar(
+        leading: _isSearching ? const BackButton() : null,
+        title: _isSearching ? _buildSearchBar() : _buildTitle(),
+        actions: _buildActions(),
+      ),
+      body: FutureBuilder<RouteFile>(
+          future: _futureRouteFile,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              //_routesForDisplay = snapshot.data.allRouteList;
+              //_routes = _routesForDisplay;
+              ListView myList = new ListView.builder(
+                shrinkWrap: true,
+                itemCount: _routesForDisplay.length, // + 1,
+                itemBuilder: (context, index) {
+                  // Assign values to local variables
+                  globalRouteNo = _routesForDisplay[index].routeNo;
+                  globalOriTC = _routesForDisplay[index].oriTC;
+                  globalDirectionSymbol = _routesForDisplay[index].directionSym;
+                  globalDestTC = _routesForDisplay[index].destTC;
+                  globalRemarksTC = _routesForDisplay[index].remarksTC;
+                  globalFareDollar = _routesForDisplay[index].fareDollar;
+                  globalTagSpecial = _routesForDisplay[index].tagSpecial;
+                  globalOperatorHK = _routesForDisplay[index].operatorHK;
+                  globalRouteType = _routesForDisplay[index].routeType;
+                  globalLantauTag = _routesForDisplay[index].lantauTag;
+
+                  currentRoute = _routesForDisplay[index].routeNo;
+                  currentOp = _routesForDisplay[index].operatorHK;
+                  print("operatorHK: " + prevOp + currentOp);
+                  print("lantau type" + globalLantauTag);
+
+                  ////////// FIX SPECIAL ROUTES LATER //////////TODO:
+                  if (currentRoute == prevRoute && currentOp == prevOp) {
+                    print("servicetype incremented");
+                    serviceType += 1;
+                  } else {
+                    serviceType = 1;
+                  }
+                  print("route: " + currentRoute);
+                  print("serviceType: " + "${serviceType}");
+                  prevRoute = currentRoute;
+                  prevOp = currentOp;
+
+                  return _listItem(index); // - 1);
+                },
+              );
+              return myList;
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            return LinearProgressIndicator(
+              backgroundColor: Colors.teal,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.teal[50]),
+            );
+          }),
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+
+}

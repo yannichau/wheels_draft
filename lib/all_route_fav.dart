@@ -11,35 +11,42 @@ class AllRouteFav extends StatefulWidget {
 }
 
 class _AllRouteFavState extends State<AllRouteFav> {
-  String _setImage(String operator) {
-    if (operator == "lwb") {
+  String _setImage(String operatorHK) {
+    if (operatorHK == "lwb") {
       return 'images/lwb.png';
-    } else if (operator == "kmb") {
+    } else if (operatorHK == "kmb") {
       return 'images/kmb.png';
-    } else if (operator == "NWFB") {
+    } else if (operatorHK == "NWFB") {
       return 'images/nwfb.jpg';
-    } else if (operator == "CTB") {
+    } else if (operatorHK == "CTB") {
       return 'images/ctb.png';
     } else {
       return 'images/joint.png';
     }
   }
 
-  Widget stopTitle(String operator, String cName) {
-    if (operator == "kmb" || operator == "lwb") {
+  Widget stopTitle(String operatorHK, String cName) {
+    if (operatorHK == "kmb" || operatorHK == "lwb") {
       return Text(cName);
-    } else if (operator == "CTB" || operator == "NWFB") {
-      return NWFBStop(stopID:cName);
+    } else if (operatorHK == "CTB" || operatorHK == "NWFB") {
+      return NWFBStop(stopID: cName);
     } else {
       return Text(cName);
     }
   }
 
-  Widget loadETA(String operator, String stopID, String route, String bound, String serviceType, String stopCode, String seq) {
-    
-  }
+  Widget loadETA(String operatorHK, String stopID, String route, String bound,
+      String serviceType, String stopCode, String seq) {}
 
-
+  ////////// TEMPORARY LOCAL VARIABLES ////////////
+  String favID;
+  String favOperatorHK;
+  String favRoute;
+  String favBound;
+  String favStopCode;
+  String favCName;
+  String favServiceType;
+  String favSeq;
 
   @override
   Widget build(BuildContext context) {
@@ -52,53 +59,63 @@ class _AllRouteFavState extends State<AllRouteFav> {
             future: DBProvider.db.getAllFavStops(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return Center(
-                  child: LinearProgressIndicator(),
+                return LinearProgressIndicator(
+                  backgroundColor: Colors.teal,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.indigo),
                 );
               } else {
                 return ListView.builder(
-                  itemCount: snapshot.data.length, 
+                  itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
+
+                    //ASSIGN VALUES TO TEMPORARY VARIABLES
+                    favID = snapshot.data[index].id;
+                    favOperatorHK = snapshot.data[index].operatorHK;
+                    favRoute = snapshot.data[index].route;
+                    favBound = snapshot.data[index].bound;
+                    favStopCode = snapshot.data[index].stopCode;
+                    favCName = snapshot.data[index].cName;
+                    favServiceType = snapshot.data[index].serviceType;
+                    favSeq = snapshot.data[index].seq;
+
                     return Card(
                       child: ExpansionTile(
-                        leading: Container(
-                          width: 60,
-                          child: Column(
-                            children: [
-                              Image(
-                                image: new AssetImage(
-                                    _setImage(snapshot.data[index].operator)),
-                                height: 25,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5.0),
-                                child: Text(snapshot.data[index].route,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    )),
-                              )
-                            ],
+                          leading: Container(
+                            width: 60,
+                            child: Column(
+                              children: [
+                                Image(
+                                  image: new AssetImage(_setImage(favOperatorHK)),
+                                  height: 25,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Text(favRoute,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        title: stopTitle(snapshot.data[index].operator, snapshot.data[index].cName),
-                        subtitle: Text(snapshot.data[index].id),
-                        children: [
-                          Text("ETA Placeholder"),
-                          IconButton(
-                            icon: new Icon(Icons.delete),
+                          title: stopTitle(favOperatorHK,favCName),
+                          subtitle: Text(favID),
+                          children: [
+                            Text("ETA Placeholder"),
+                            IconButton(
+                              icon: new Icon(Icons.delete),
+                              onPressed: () {
+                                DBProvider.db.deleteFavStop(favStopCode);
+                              },
+                            )
+                          ],
+                          trailing: IconButton(
+                            icon: Icon(Icons.keyboard_arrow_right),
                             onPressed: () {
-                              DBProvider.db.deleteAllFavStops();
+                              //TODO:
                             },
-                          )
-                        ],
-                        trailing: IconButton (
-                          icon: Icon(Icons.keyboard_arrow_right),
-                          onPressed: () {
-                            
-                          },
-                        )
-                      ),
+                          )),
                     );
                   },
                 );

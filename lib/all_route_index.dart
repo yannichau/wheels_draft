@@ -72,7 +72,6 @@ class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveCl
   static final GlobalKey<ScaffoldState> scaffoldKey =  new GlobalKey<ScaffoldState>();
 
   //////////FUNCTIONS FOR RENDERING EXPANDING LIST TILES//////////
-
   String _setImage(String operator, String lantauTag) {
     if (operator == "lwb") {
       return 'images/lwb.png';
@@ -136,7 +135,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveCl
         context,
         MaterialPageRoute(
             builder: (context) => NWFBTabs(
-                route: route, bound: bound, oriTC: oriTC, destTC: destTC, operator: operator,  isSearching: _isSearching, 
+                route: route, bound: bound, oriTC: oriTC, destTC: destTC, operatorHK: operator,  isSearching: _isSearching, 
             )
         ),
       );

@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<NWFBETAAPI> fetchNWFBETA(String operator, String stopID, String route) async {
-  String link = "https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/" + operator + "/" + stopID + "/" + route;
+Future<NWFBETAAPI> fetchNWFBETA(String operatorHK, String stopID, String route) async {
+  String link = "https://rt.data.gov.hk/v1/transport/citybus-nwfb/eta/" + operatorHK + "/" + stopID + "/" + route;
   print(link);
   final response = await http.get(link);
 
@@ -65,11 +65,11 @@ class NWFBETAData {
 }
 
 class NWFBETA extends StatefulWidget {
-  final String operator;
+  final String operatorHK;
   final String stopID;
   final String route;
 
-  NWFBETA({ this.operator, this.stopID, this.route, Key key,}): super(key: key);
+  NWFBETA({ this.operatorHK, this.stopID, this.route, Key key,}): super(key: key);
 
   @override
   _NWFBETAState createState() => _NWFBETAState();
@@ -82,7 +82,7 @@ class _NWFBETAState extends State<NWFBETA> {
   @override
   void initState() {
     super.initState();
-    futureNWFBETAAPI = fetchNWFBETA(widget.operator, widget.stopID, widget.route);
+    futureNWFBETAAPI = fetchNWFBETA(widget.operatorHK, widget.stopID, widget.route);
   }
 
   Text _etaMod(String eta) {

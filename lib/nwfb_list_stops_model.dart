@@ -9,46 +9,46 @@ class NWFBLSService {
   static LocalStorage storage = new LocalStorage("nwfbRoutes");
   //var stopwatch = new Stopwatch()..start();
 
-  void saveNWFBLS(String route, String bound, String operator, NWFBAPI nwfbLS) async {
+  void saveNWFBLS(String route, String bound, String operatorHK, NWFBAPI nwfbLS) async {
     await storage.ready;
-    storage.setItem("nwfbroute"+route+"bound"+bound+"operator"+operator, nwfbLS);
-    print("saved item as " + "nwfbroute"+route+"bound"+bound+"operator"+operator);
+    storage.setItem("nwfbroute"+route+"bound"+bound+"operator"+operatorHK, nwfbLS);
+    print("saved item as " + "nwfbroute"+route+"bound"+bound+"operator"+operatorHK);
   }
 
-  Future<NWFBAPI> getNWFBLS(String route, String bound, String operator) async {
-    NWFBAPI nwfbLS = await getNWFBLSFromCache(route, bound, operator);
+  Future<NWFBAPI> getNWFBLS(String route, String bound, String operatorHK) async {
+    NWFBAPI nwfbLS = await getNWFBLSFromCache(route, bound, operatorHK);
     if (nwfbLS == null) {
-      nwfbLS = await getNWFBLSFromAPI(route, bound, operator);
+      nwfbLS = await getNWFBLSFromAPI(route, bound, operatorHK);
     }
     return nwfbLS;
     //how bout trying differentiating the 2 variables?
   }
 
-  Future<NWFBAPI> getNWFBLSFromAPI(String route, String bound, String operator) async {
+  Future<NWFBAPI> getNWFBLSFromAPI(String route, String bound, String operatorHK) async {
     print("call from nwfbroute api");
-    NWFBAPI nwfbLS = await fetchNWFBAPI(route, bound, operator);
+    NWFBAPI nwfbLS = await fetchNWFBAPI(route, bound, operatorHK);
     nwfbLS.fromCache = false;
     //Future.delayed(Duration(milliseconds: 100));
-    saveNWFBLS(route, bound, operator, nwfbLS);
+    saveNWFBLS(route, bound, operatorHK, nwfbLS);
     return nwfbLS;  
   }
 
-  Future<NWFBAPI> getNWFBLSFromCache(String route, String bound, String operator) async {
+  Future<NWFBAPI> getNWFBLSFromCache(String route, String bound, String operatorHK) async {
     print("call from nwfbroute cache");
     await storage.ready;
-    Map <String, dynamic> data = storage.getItem("nwfbroute"+route+"bound"+bound+"operator"+operator);
+    Map <String, dynamic> data = storage.getItem("nwfbroute"+route+"bound"+bound+"operator"+operatorHK);
     print(data);
     if (data == null) {
       return null;
     }
     NWFBAPI nwfbLS = NWFBAPI.fromJson(data);
     nwfbLS.fromCache = true;
-    print("loaded item as " + "nwfbroute"+route+"bound"+bound+"operator"+operator);
+    print("loaded item as " + "nwfbroute"+route+"bound"+bound+"operator"+operatorHK);
     return nwfbLS;
   }
 
-  Future<NWFBAPI> fetchNWFBAPI(String route, String bound, String operator) async {
-    operator.toUpperCase();
+  Future<NWFBAPI> fetchNWFBAPI(String route, String bound, String operatorHK) async {
+    operatorHK.toUpperCase();
     /*
     String boundMod;
     if (bound == '1') {
@@ -57,7 +57,7 @@ class NWFBLSService {
       boundMod = "inbound";
     }
     */
-    String link = "https://rt.data.gov.hk/v1/transport/citybus-nwfb/route-stop/" + operator + "/" + route + "/" + bound;
+    String link = "https://rt.data.gov.hk/v1/transport/citybus-nwfb/route-stop/" + operatorHK + "/" + route + "/" + bound;
     print(link);
     final response = await http.get(link);
 
