@@ -47,6 +47,7 @@ class _AllRouteFavState extends State<AllRouteFav> {
   String favCName;
   String favServiceType;
   String favSeq;
+  String favKeyID;
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,6 @@ class _AllRouteFavState extends State<AllRouteFav> {
                 return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
-
                     //ASSIGN VALUES TO TEMPORARY VARIABLES
                     favID = snapshot.data[index].id;
                     favOperatorHK = snapshot.data[index].operatorHK;
@@ -85,7 +85,8 @@ class _AllRouteFavState extends State<AllRouteFav> {
                             child: Column(
                               children: [
                                 Image(
-                                  image: new AssetImage(_setImage(favOperatorHK)),
+                                  image:
+                                      new AssetImage(_setImage(favOperatorHK)),
                                   height: 25,
                                 ),
                                 Padding(
@@ -99,21 +100,48 @@ class _AllRouteFavState extends State<AllRouteFav> {
                               ],
                             ),
                           ),
-                          title: stopTitle(favOperatorHK,favCName),
+                          title: stopTitle(favOperatorHK, favCName),
                           subtitle: Text(favID),
                           children: [
                             Text("ETA Placeholder"),
                             IconButton(
                               icon: new Icon(Icons.delete),
                               onPressed: () {
-                                DBProvider.db.deleteFavStop(favStopCode);
+                                return showDialog(
+                                  context: context,
+                                  barrierDismissible:false, // user must tap button for close dialog!
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('刪除？'),
+                                      content: const Text('這會令此車站從「我的最愛」介面消失。'),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                          child: const Text('取消'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        FlatButton(
+                                          child: const Text('確認'),
+                                          onPressed: () {
+                                            setState(() {
+                                              DBProvider.db
+                                                  .deleteFavStop(favID);
+                                            });
+                                            Navigator.of(context).pop();
+                                          },
+                                        )
+                                      ],
+                                    );
+                                  },
+                                );
                               },
                             )
                           ],
                           trailing: IconButton(
                             icon: Icon(Icons.keyboard_arrow_right),
                             onPressed: () {
-                              //TODO:
+                              //TODO:  Bring to Liststop
                             },
                           )),
                     );
