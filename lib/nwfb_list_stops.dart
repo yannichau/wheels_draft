@@ -113,18 +113,18 @@ class _NWFBListStopsState extends State<NWFBListStops> {
                           child: const Text('確認'),
                           onPressed: () {
                             FavStop currentStop = FavStop(
-                              id: nwfbOperator + nwfbRoute + nwfbDirection + nwfbStopCode + "${nwfbSeq}",
+                              id: nwfbOperator + nwfbRoute + nwfbDirection + nwfbLS.routeStopsList[index].co + "${nwfbLS.routeStopsList[index].seq}",
                               operatorHK: nwfbOperator,
                               route: nwfbRoute,
                               bound: nwfbDirection, //hmmmm
-                              seq: "${nwfbSeq}",
-                              stopCode: nwfbStopCode,
-                              cName: nwfbStopCode, //pass stopcode as cName for NWFB
+                              seq: "${nwfbLS.routeStopsList[index].seq}",
+                              stopCode: nwfbLS.routeStopsList[index].stop,
+                              cName: nwfbLS.routeStopsList[index].stop, //pass stopcode as cName for NWFB
                               serviceType: "null",
                             );
                             DBProvider.db.createFavstop(currentStop);
                             print(
-                                "added ${nwfbStopCode} favourite to database");
+                                "added ${nwfbLS.routeStopsList[index].stop} favourite to database");
                             print(nwfbOperator);
                             Navigator.of(context).pop();
                           },

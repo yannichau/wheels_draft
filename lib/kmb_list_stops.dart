@@ -139,19 +139,21 @@ class _KMBListStopsState extends State<KMBListStops>
                               FavStop currentStop = FavStop(
                                 id: kmbRoute + 
                                     kmbBound +
-                                    kmbBSI +
+                                    kmbLS.data.routeStopsList[index].bsiCode +
                                     kmbServiceType,
                                 operatorHK: "kmb",
                                 route: kmbRoute,
                                 bound: kmbBound,
-                                seq: kmbSeq,
-                                stopCode: kmbBSI,
-                                cName: kmbStopCName,
+                                seq: kmbLS.data.routeStopsList[index].seq,
+                                stopCode: kmbLS.data.routeStopsList[index].bsiCode,
+                                cName: kmbLS.data.routeStopsList[index].cName,
                                 serviceType: kmbServiceType,
                               );
-                              DBProvider.db.createFavstop(currentStop);
+                              setState(() {
+                                DBProvider.db.createFavstop(currentStop);
+                              });
                               print(
-                                  "added ${kmbBSI} favourite to database");
+                                  "added ${kmbLS.data.routeStopsList[index].bsiCode} favourite to database");
                               Navigator.of(context).pop();
                             },
                           )
