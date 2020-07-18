@@ -59,7 +59,7 @@ class _AllRouteFavState extends State<AllRouteFav> {
       String seq,
       String oriTC,
       String destTC) {
-    if (operatorHK == "kmb" || operatorHK == "lwb") {
+    if (operatorHK == "kmb") {
       setState(() {
         Navigator.push(
           context,
@@ -73,14 +73,34 @@ class _AllRouteFavState extends State<AllRouteFav> {
                     destTC: destTC,
                     isSearching: false,
                     isCircular: false,
+                    islwb: false,
                   )),
         );
       });
-    } else if (operatorHK == "CTB" || operatorHK == "NWFB") {
+    } else if (operatorHK == "lwb") {
+      setState(() {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => KMBTabs(
+                    route: route,
+                    serviceType: serviceType,
+                    bound: bound,
+                    oriTC: oriTC,
+                    destTC: destTC,
+                    isSearching: false,
+                    isCircular: false,
+                    islwb: true,
+                  )),
+        );
+      });
+    }else if (operatorHK == "CTB" || operatorHK == "NWFB") {
       String boundMod;
-      if (bound.contains("O")) { //Outbound
+      if (bound.contains("O")) {
+        //Outbound
         boundMod = "1";
-      } else if (bound.contains("I")) { //Inbound
+      } else if (bound.contains("I")) {
+        //Inbound
         bound = "2";
       } else {
         boundMod = "0";
@@ -110,7 +130,8 @@ class _AllRouteFavState extends State<AllRouteFav> {
                   oriTC: oriTC,
                   destTC: destTC,
                   isSearching: false,
-                  isCircular: false)),
+                  isCircular: false,
+                  islwb: false,)),
         );
       });
     }
@@ -149,7 +170,7 @@ class _AllRouteFavState extends State<AllRouteFav> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("我的最愛🤩"),
+          title: Text("我的最愛"),
           backgroundColor: Colors.indigo,
         ),
         body: FutureBuilder(
@@ -203,98 +224,118 @@ class _AllRouteFavState extends State<AllRouteFav> {
 
                       return Card(
                         child: ExpansionTile(
-                            leading: Container(
-                              width: 60,
-                              child: Column(
-                                children: [
-                                  Image(
-                                    image: new AssetImage(
-                                        _setImage(favOperatorHK)),
-                                    height: 25,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 5.0),
-                                    child: Text(favRoute,
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        )),
-                                  )
-                                ],
-                              ),
+                          leading: Container(
+                            width: 60,
+                            child: Column(
+                              children: [
+                                Image(
+                                  image:
+                                      new AssetImage(_setImage(favOperatorHK)),
+                                  height: 25,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Text(favRoute,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                )
+                              ],
                             ),
-                            title: stopTitle(favOperatorHK, favCName),
-                            subtitle:
-                                displayDestination(favOperatorHK, favDestTC),
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 75, bottom: 30.0),
-                                    child: loadETA(
-                                        snapshot.data[index].operatorHK,
-                                        snapshot.data[index].stopCode,
-                                        snapshot.data[index].route,
-                                        snapshot.data[index].bound,
-                                        snapshot.data[index].serviceType,
-                                        snapshot.data[index].seq),
-                                  ),
-                                  IconButton(
-                                    icon: new Icon(Icons.delete),
-                                    onPressed: () {
-                                      return showDialog(
-                                        context: context,
-                                        barrierDismissible:
-                                            false, // user must tap button for close dialog!
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            title: Text('拜拜？😢'),
-                                            content:
-                                                const Text('我會由「我的最愛」介面消失。'),
-                                            actions: <Widget>[
-                                              FlatButton(
-                                                child: const Text('取消'),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                              FlatButton(
-                                                child: const Text('確認'),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    DBProvider.db
-                                                        .deleteFavStop(favID);
-                                                  });
-                                                  Navigator.of(context).pop();
-                                                },
-                                              )
+                          ),
+                          title: stopTitle(favOperatorHK, favCName),
+                          subtitle:
+                              displayDestination(favOperatorHK, favDestTC),
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 75, bottom: 30.0),
+                                  child: loadETA(
+                                      snapshot.data[index].operatorHK,
+                                      snapshot.data[index].stopCode,
+                                      snapshot.data[index].route,
+                                      snapshot.data[index].bound,
+                                      snapshot.data[index].serviceType,
+                                      snapshot.data[index].seq),
+                                ),
+                                ButtonBar(
+                                    alignment: MainAxisAlignment.center,
+                                    children: [
+                                      OutlineButton(
+                                          padding: EdgeInsets.all(10),
+                                          textColor: Colors.grey[800],
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.directions_bus),
+                                              Text("路線資料"),
                                             ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                  )
-                                ],
-                              ),
-                            ],
-                            trailing: IconButton(
-                              icon: Icon(Icons.keyboard_arrow_right),
-                              onPressed: () {
-                                pushtoListStop(
-                                  snapshot.data[index].operatorHK,
-                                  snapshot.data[index].stopCode,
-                                  snapshot.data[index].route,
-                                  snapshot.data[index].bound,
-                                  snapshot.data[index].serviceType,
-                                  snapshot.data[index].seq,
-                                  snapshot.data[index].oriTC,
-                                  snapshot.data[index].destTC,
-                                );
-                              },
-                            )),
+                                          ),
+                                          onPressed: () {
+                                            pushtoListStop(
+                                              snapshot.data[index].operatorHK,
+                                              snapshot.data[index].stopCode,
+                                              snapshot.data[index].route,
+                                              snapshot.data[index].bound,
+                                              snapshot.data[index].serviceType,
+                                              snapshot.data[index].seq,
+                                              snapshot.data[index].oriTC,
+                                              snapshot.data[index].destTC,
+                                            );
+                                          }),
+                                      OutlineButton(
+                                          padding: EdgeInsets.all(10),
+                                          textColor: Colors.grey[800],
+                                          child: Row(
+                                            children: [
+                                              Icon(Icons.delete),
+                                              Text("移除最愛"),
+                                            ],
+                                          ),
+                                          onPressed: () {
+                                            return showDialog(
+                                              context: context,
+                                              barrierDismissible:
+                                                  false, // user must tap button for close dialog!
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text('拜拜？😢'),
+                                                  content: const Text(
+                                                      '我會由「我的最愛」介面消失。'),
+                                                  actions: <Widget>[
+                                                    FlatButton(
+                                                      child: const Text('取消'),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    ),
+                                                    FlatButton(
+                                                      child: const Text('確認'),
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          DBProvider.db
+                                                              .deleteFavStop(
+                                                                  snapshot.data[index].id);
+                                                        });
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    )
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          })
+                                    ]),
+                              ],
+                            ),
+                          ],
+                        ),
                       );
                     },
                   );

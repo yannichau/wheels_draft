@@ -11391,7 +11391,7 @@
             "fare": "$ 48.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11403,7 +11403,7 @@
             "fare": "$ 40.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11415,7 +11415,7 @@
             "fare": "$ 45.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11427,7 +11427,7 @@
             "fare": "$ 45.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11439,7 +11439,7 @@
             "fare": "$ 33.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11451,7 +11451,7 @@
             "fare": "$ 33.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11463,7 +11463,7 @@
             "fare": "$ 39.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11475,7 +11475,7 @@
             "fare": "$ 39.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11487,7 +11487,7 @@
             "fare": "$ 42.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11511,7 +11511,7 @@
             "fare": "$ 42.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11523,7 +11523,7 @@
             "fare": "$ 42.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11535,7 +11535,7 @@
             "fare": "$ 18.9",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11547,7 +11547,7 @@
             "fare": "$ 18.9",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11559,7 +11559,7 @@
             "fare": "$ 27.7",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11583,7 +11583,7 @@
             "fare": "$ 27.7",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11595,7 +11595,7 @@
             "fare": "$ 27.7",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11607,7 +11607,7 @@
             "fare": "$ 27.7",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11619,7 +11619,7 @@
             "fare": "$ 18.9",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11631,7 +11631,7 @@
             "fare": "$ 22.3",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11655,7 +11655,7 @@
             "fare": "$ 27.7",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11667,7 +11667,7 @@
             "fare": "$ 30.9",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11679,7 +11679,7 @@
             "fare": "$ 30.9",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11691,7 +11691,7 @@
             "fare": "$ 27.7",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11703,7 +11703,7 @@
             "fare": "$ 5.8",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -11715,7 +11715,7 @@
             "fare": "$ 21.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11727,7 +11727,7 @@
             "fare": "$ 21.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11751,7 +11751,7 @@
             "fare": "$ 14.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11763,7 +11763,7 @@
             "fare": "$ 14.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -11787,7 +11787,7 @@
             "fare": "$ 23.0",
             "tag": "peak",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -11811,7 +11811,7 @@
             "fare": "$ 18.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11823,7 +11823,7 @@
             "fare": "$ 24.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11835,7 +11835,7 @@
             "fare": "$ 27.5",
             "tag": "peak",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -11847,7 +11847,7 @@
             "fare": "$ 18.0",
             "tag": "peak",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11859,7 +11859,7 @@
             "fare": "$ 24.0",
             "tag": "peak",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -11871,7 +11871,7 @@
             "fare": "$ 18.0",
             "tag": "peak",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11883,7 +11883,7 @@
             "fare": "$ 18.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11895,7 +11895,7 @@
             "fare": "$ 18.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11907,7 +11907,7 @@
             "fare": "$ 10.8",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -11919,7 +11919,7 @@
             "fare": "$ 10.8",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11931,7 +11931,7 @@
             "fare": "$ 10.8",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -11943,7 +11943,7 @@
             "fare": "$ 13.9",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11955,7 +11955,7 @@
             "fare": "$ 14.3",
             "tag": "peak",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -11967,7 +11967,7 @@
             "fare": "$ 13.9",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -12015,7 +12015,7 @@
             "fare": "$ 13.9",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -12027,7 +12027,7 @@
             "fare": "$ 13.9",
             "tag": "peak",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12051,7 +12051,7 @@
             "fare": "$ 13.9",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -12063,7 +12063,7 @@
             "fare": "$ 13.9",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -12087,7 +12087,7 @@
             "fare": "$ 31.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -12099,7 +12099,7 @@
             "fare": "$ 23.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -12123,7 +12123,7 @@
             "fare": "$ 23.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -12135,7 +12135,7 @@
             "fare": "$ 23.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12147,7 +12147,7 @@
             "fare": "$ 23.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12159,7 +12159,7 @@
             "fare": "$ 24.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12183,7 +12183,7 @@
             "fare": "",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12195,7 +12195,7 @@
             "fare": "$ 28.0",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12207,7 +12207,7 @@
             "fare": "$ 28.0",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12231,7 +12231,7 @@
             "fare": "$ 21.6",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "airport"
         },
         {
@@ -12243,7 +12243,7 @@
             "fare": "$ 27.0",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12267,7 +12267,7 @@
             "fare": "$ 30.1",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12303,7 +12303,7 @@
             "fare": "$ 52.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12327,7 +12327,7 @@
             "fare": "$ 37.5",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12351,7 +12351,7 @@
             "fare": "$ 52.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12363,7 +12363,7 @@
             "fare": "$ 33.0",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12375,7 +12375,7 @@
             "fare": "$ 33.0",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12387,7 +12387,7 @@
             "fare": "$ 40.0",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12399,7 +12399,7 @@
             "fare": "$ 40.0",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12423,7 +12423,7 @@
             "fare": "$ 40.0",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12435,7 +12435,7 @@
             "fare": "$ 40.0",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12447,7 +12447,7 @@
             "fare": "$ 45.0",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12459,7 +12459,7 @@
             "fare": "$ 42.5",
             "tag": "",
             "operator": "lwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12591,7 +12591,7 @@
             "fare": "$ 4.0",
             "tag": "",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12603,7 +12603,7 @@
             "fare": "$ 4.0",
             "tag": "peak",
             "operator": "ctb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": ""
         },
         {
@@ -12699,7 +12699,7 @@
             "fare": "$ 5.8",
             "tag": "special",
             "operator": "ctblwb",
-            "route_type": "bidrectional",
+            "route_type": "bidirectional",
             "lantau_tag": "expo"
         },
         {

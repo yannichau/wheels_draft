@@ -70,16 +70,22 @@ class _NWFBListStopsState extends State<NWFBListStops> {
 
   Widget _listStops() {
     if (nwfbLS == null) {
-      return LinearProgressIndicator(
-        backgroundColor: Colors.orange,
-        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-      );
+      if (widget.operatorHK == "CTB") {
+        return LinearProgressIndicator(
+          backgroundColor: Colors.red,
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
+        );
+      } else {
+        return LinearProgressIndicator(
+          backgroundColor: Colors.orange,
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+        );
+      }
     }
     return ListView.builder(
       key: widget._scaffoldKey,
       itemCount: nwfbLS.routeStopsList.length,
       itemBuilder: (context, index) {
-
         //ASIGN VALUES FROM FUTURE
         nwfbRoute = nwfbLS.routeStopsList[index].route;
         nwfbStopCode = nwfbLS.routeStopsList[index].stop;
@@ -113,22 +119,30 @@ class _NWFBListStopsState extends State<NWFBListStops> {
                           child: const Text('確認'),
                           onPressed: () {
                             FavStop currentStop = FavStop(
-                              id: nwfbOperator + nwfbRoute + nwfbDirection + nwfbLS.routeStopsList[index].co + "${nwfbLS.routeStopsList[index].seq}",
+                              id: nwfbOperator +
+                                  nwfbRoute +
+                                  nwfbDirection +
+                                  nwfbLS.routeStopsList[index].co +
+                                  "${nwfbLS.routeStopsList[index].seq}",
                               operatorHK: nwfbOperator,
                               route: nwfbRoute,
                               bound: nwfbDirection, //hmmmm
                               seq: "${nwfbLS.routeStopsList[index].seq}",
                               stopCode: nwfbLS.routeStopsList[index].stop,
-                              cName: nwfbLS.routeStopsList[index].stop, //pass stopcode as cName for NWFB
+                              cName: nwfbLS.routeStopsList[index]
+                                  .stop, //pass stopcode as cName for NWFB
                               serviceType: "null",
                               oriTC: nwfbLS.routeStopsList[0].stop,
-                              destTC: nwfbLS.routeStopsList[nwfbLS.routeStopsList.length-1].stop,
+                              destTC: nwfbLS
+                                  .routeStopsList[
+                                      nwfbLS.routeStopsList.length - 1]
+                                  .stop,
                             );
                             DBProvider.db.createFavstop(currentStop);
                             print(
                                 "added ${nwfbLS.routeStopsList[index].stop} favourite to database");
                             print(nwfbOperator);
-                            print("bound: "+ nwfbDirection);
+                            print("bound: " + nwfbDirection);
                             Navigator.of(context).pop();
                           },
                         )

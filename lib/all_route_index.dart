@@ -18,8 +18,7 @@ class RouteFile {
     var list = json["routes"] as List;
     print(list.runtimeType);
 
-    List<AllRoute> amendedList = list.map((i) =>
-      AllRoute.fromJson(i)). toList();
+    List<AllRoute> amendedList = list.map((i) => AllRoute.fromJson(i)).toList();
 
     return new RouteFile(
       allRouteList: amendedList,
@@ -39,7 +38,17 @@ class AllRoute {
   String routeType;
   String lantauTag;
 
-  AllRoute({this.routeNo,this.oriTC, this.directionSym, this.destTC, this.remarksTC, this.fareDollar, this.routeType, this.lantauTag, this.operatorHK, this.tagSpecial});
+  AllRoute(
+      {this.routeNo,
+      this.oriTC,
+      this.directionSym,
+      this.destTC,
+      this.remarksTC,
+      this.fareDollar,
+      this.routeType,
+      this.lantauTag,
+      this.operatorHK,
+      this.tagSpecial});
 
   AllRoute.fromJson(Map<String, dynamic> json) {
     routeNo = json["route_no"];
@@ -53,7 +62,6 @@ class AllRoute {
     routeType = json["route_type"];
     lantauTag = json["lantau_tag"];
   }
-
 }
 
 class AllRouteIndex extends StatefulWidget {
@@ -63,13 +71,14 @@ class AllRouteIndex extends StatefulWidget {
   _AllRouteIndexState createState() => _AllRouteIndexState();
 }
 
-class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveClientMixin{
-  
+class _AllRouteIndexState extends State<AllRouteIndex>
+    with AutomaticKeepAliveClientMixin {
   //////////DEFINE VARIABLES//////////
   List<AllRoute> _routesForDisplay = List<AllRoute>();
   List<AllRoute> _routesUnfiltered = List<AllRoute>();
   Future<RouteFile> _futureRouteFile;
-  static final GlobalKey<ScaffoldState> scaffoldKey =  new GlobalKey<ScaffoldState>();
+  static final GlobalKey<ScaffoldState> scaffoldKey =
+      new GlobalKey<ScaffoldState>();
 
   //////////FUNCTIONS FOR RENDERING EXPANDING LIST TILES//////////
   String _setImage(String operator, String lantauTag) {
@@ -119,73 +128,109 @@ class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveCl
     return "";
   }
 
-  void _returnStops(String route, String serviceType, String bound, String operator, String oriTC, String destTC, bool isCircular) {
+  void _returnStops(String route, String serviceType, String bound,
+      String operator, String oriTC, String destTC, bool isCircular) {
     //print("operator: " + operator);
-    if (operator == "kmb" || operator == "lwb") {
+    if (operator == "kmb") {
       setState(() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => KMBTabs(
-                route: route, serviceType: serviceType, bound: bound, oriTC: oriTC, destTC: destTC,isSearching: _isSearching, isCircular: isCircular,)),
-      );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => KMBTabs(
+                    route: route,
+                    serviceType: serviceType,
+                    bound: bound,
+                    oriTC: oriTC,
+                    destTC: destTC,
+                    isSearching: _isSearching,
+                    isCircular: isCircular,
+                    islwb: false,
+                  )),
+        );
+      });
+    } else if (operator == "lwb") {
+      setState(() {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => KMBTabs(
+                  route: route,
+                  serviceType: serviceType,
+                  bound: bound,
+                  oriTC: oriTC,
+                  destTC: destTC,
+                  isSearching: _isSearching,
+                  isCircular: isCircular,
+                  islwb: true)),
+        );
       });
     } else if (operator == "ctb" || operator == "nwfb") {
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => NWFBTabs(
-                route: route, bound: bound, oriTC: oriTC, destTC: destTC, operatorHK: operator,  isSearching: _isSearching, 
-            )
-        ),
+                  route: route,
+                  bound: bound,
+                  oriTC: oriTC,
+                  destTC: destTC,
+                  operatorHK: operator,
+                  isSearching: _isSearching,
+                )),
       );
-    } else { //jointly operated services
-    setState(() {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => KMBTabs(
-                route: route, serviceType: serviceType, bound: bound, oriTC: oriTC, destTC: destTC, isSearching: _isSearching, isCircular: isCircular)),
-      );
+    } else {
+      //jointly operated services
+      setState(() {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => KMBTabs(
+                  route: route,
+                  serviceType: serviceType,
+                  bound: bound,
+                  oriTC: oriTC,
+                  destTC: destTC,
+                  isSearching: _isSearching,
+                  isCircular: isCircular,
+                  islwb: false)),
+        );
       });
     }
   }
 
 ///////////FOR SEARCH QUERIES//////////
-  
+
   _buildSearchBar() {
     return TextField(
-        showCursor: true,
-        keyboardType: TextInputType.visiblePassword,
-        cursorColor: Colors.teal,
-        autofocus: true,
-        style: const TextStyle(color: Colors.white, fontSize: 20.0),
-        decoration: InputDecoration(
-            //labelText: "尋找路線",
-            hintText: "尋找路線",
-            hintStyle: const TextStyle(color: Colors.white30),
-            border: InputBorder.none,
-            //prefixIcon: Icon(Icons.search),
-            //border: OutlineInputBorder(
-            //    borderRadius: BorderRadius.all(Radius.circular(0.0)))
-        ),
-        onChanged: (text) {
-          text = text.toUpperCase();
-          setState(() {
-            _routesForDisplay = _routesUnfiltered.where( (note) { 
-                var routeNumber = note.routeNo.toUpperCase();
-                return routeNumber.startsWith(text);
-            }).toList();
-          });
-        },
-      );
+      showCursor: true,
+      keyboardType: TextInputType.visiblePassword,
+      cursorColor: Colors.teal,
+      autofocus: true,
+      style: const TextStyle(color: Colors.white, fontSize: 20.0),
+      decoration: InputDecoration(
+        //labelText: "尋找路線",
+        hintText: "尋找路線",
+        hintStyle: const TextStyle(color: Colors.white30),
+        border: InputBorder.none,
+        //prefixIcon: Icon(Icons.search),
+        //border: OutlineInputBorder(
+        //    borderRadius: BorderRadius.all(Radius.circular(0.0)))
+      ),
+      onChanged: (text) {
+        text = text.toUpperCase();
+        setState(() {
+          _routesForDisplay = _routesUnfiltered.where((note) {
+            var routeNumber = note.routeNo.toUpperCase();
+            return routeNumber.startsWith(text);
+          }).toList();
+        });
+      },
+    );
   }
 
   void _startSearch() {
     print("open search box");
 
-    ModalRoute
-        .of(context)
+    ModalRoute.of(context)
         .addLocalHistoryEntry(new LocalHistoryEntry(onRemove: _stopSearching));
 
     setState(() {
@@ -215,13 +260,13 @@ class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveCl
 
     if (!_isSearching) {
       return <Widget>[
-      Padding(
-        padding: const EdgeInsets.only(right:8.0),
-        child: new IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: _startSearch,
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0),
+          child: new IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: _startSearch,
+          ),
         ),
-      ),
       ];
     }
   }
@@ -256,14 +301,13 @@ class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveCl
       this._routesUnfiltered = _routesForDisplay;
     });
     return routeFile;
-}
-
+  }
 
   //////////MAIN//////////
   @override
   void initState() {
     super.initState();
-    _futureRouteFile = _loadRouteList(); 
+    _futureRouteFile = _loadRouteList();
   }
 
   bool _isSearching = false;
@@ -284,49 +328,47 @@ class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveCl
         title: _isSearching ? _buildSearchBar() : _buildTitle(),
         actions: _buildActions(),
       ),
-      body: FutureBuilder<RouteFile> (
-        future: _futureRouteFile,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            //_routesForDisplay = snapshot.data.allRouteList;
-            //_routes = _routesForDisplay;
-            ListView myList = new ListView.builder(
-              shrinkWrap: true,
-              itemCount: _routesForDisplay.length,// + 1,
-              itemBuilder: (context, index) {
+      body: FutureBuilder<RouteFile>(
+          future: _futureRouteFile,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              //_routesForDisplay = snapshot.data.allRouteList;
+              //_routes = _routesForDisplay;
+              ListView myList = new ListView.builder(
+                shrinkWrap: true,
+                itemCount: _routesForDisplay.length, // + 1,
+                itemBuilder: (context, index) {
+                  currentRoute = _routesForDisplay[index].routeNo;
+                  currentOp = _routesForDisplay[index].operatorHK;
+                  print("operator: " + prevOp + currentOp);
+                  ////////// FIX SPECIAL ROUTES LATER //////////TODO:
+                  if (currentRoute == prevRoute && currentOp == prevOp) {
+                    print("servicetype incremented");
+                    serviceType += 1;
+                  } else {
+                    serviceType = 1;
+                  }
+                  print("route: " + currentRoute);
+                  print("serviceType: " + "${serviceType}");
+                  prevRoute = currentRoute;
+                  prevOp = currentOp;
 
-                currentRoute = _routesForDisplay[index].routeNo;
-                currentOp = _routesForDisplay[index].operatorHK;
-                print("operator: "+ prevOp + currentOp);
-                ////////// FIX SPECIAL ROUTES LATER //////////TODO:
-                if (currentRoute == prevRoute && currentOp == prevOp) {
-                  print("servicetype incremented");
-                  serviceType += 1;
-                } else {
-                  serviceType = 1;
-                }
-                print("route: "+ currentRoute);
-                print("serviceType: "+ "${serviceType}");
-                prevRoute = currentRoute;
-                prevOp = currentOp;
-
-                return _listItem(index);// - 1);
-              },
+                  return _listItem(index); // - 1);
+                },
+              );
+              return myList;
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            return LinearProgressIndicator(
+              backgroundColor: Colors.teal,
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.teal[50]),
             );
-            return myList;
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
-          return LinearProgressIndicator(
-            backgroundColor: Colors.teal,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.teal[50]),
-          );
-        }
-      ),
+          }),
     );
   }
 
-  _listItem(index) {
+  Card _listItem(index) {
     return Card(
       child: ExpansionTile(
         leading: Container(
@@ -367,13 +409,14 @@ class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveCl
           Align(
               child: Column(children: [
             _availableDestinations(
-                _routesForDisplay[index].routeType,
-                _routesForDisplay[index].oriTC,
-                _routesForDisplay[index].destTC,
-                _routesForDisplay[index].directionSym,
-                serviceType,
-                _routesForDisplay[index].routeNo,
-                _routesForDisplay[index].operatorHK,)
+              _routesForDisplay[index].routeType,
+              _routesForDisplay[index].oriTC,
+              _routesForDisplay[index].destTC,
+              _routesForDisplay[index].directionSym,
+              serviceType,
+              _routesForDisplay[index].routeNo,
+              _routesForDisplay[index].operatorHK,
+            )
           ])),
         ],
         trailing: _setTagIcon(_routesForDisplay[index].tagSpecial,
@@ -382,29 +425,34 @@ class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveCl
     );
   }
 
-  Column _availableDestinations(String type, String org, String dest, String direction, num serviceType, String route, String operator) {
-
+  Column _availableDestinations(String type, String org, String dest,
+      String direction, num serviceType, String route, String operator) {
     bool isCircular = false;
     if (direction == "↺") {
       isCircular = true;
     }
+    print("type: " + type);
 
     if (type == "one_way" || type == "circular") {
       return Column(children: [
         OutlineButton(
           child: Text(org + " " + direction + " " + dest),
-          onPressed: () => _returnStops(route, "${serviceType}", "1", operator, org, dest, isCircular),
+          onPressed: () => _returnStops(
+              route, "${serviceType}", "1", operator, org, dest, isCircular),
         ),
       ]);
     } else if (type == "bidirectional") {
+      print("Expanded for a bidirectional route");
       return Column(children: [
         OutlineButton(
           child: Text(org + " → " + dest),
-          onPressed: () => _returnStops(route, "${serviceType}", "1", operator, org, dest, isCircular),
+          onPressed: () => _returnStops(
+              route, "${serviceType}", "1", operator, org, dest, isCircular),
         ),
         OutlineButton(
           child: Text(dest + " → " + org),
-          onPressed: () => _returnStops(route, "${serviceType}", "2", operator, dest, org, isCircular), //reversed direction here
+          onPressed: () => _returnStops(route, "${serviceType}", "2", operator,
+              dest, org, isCircular), //reversed direction here
         ),
       ]);
     }

@@ -63,6 +63,28 @@ class _MainTabsState extends State<MainTabs>
             SafeArea(child: Tab(icon: new Icon(Icons.favorite), text:'我的最愛')),
             SafeArea(child: Tab(icon: new Icon(Icons.directions_bus), text:'路線')),
             /*
+            SafeArea(
+              child: Tab(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.favorite),
+                      Text('我的最愛'),
+                    ],
+                  )
+              ),
+            ),
+            SafeArea(
+              child: Tab(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Icon(Icons.directions_bus),
+                      Text('路線搜尋'),
+                    ],
+                  )
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
               child: Tab(

@@ -65,6 +65,14 @@ class _NWFBTabsState extends State<NWFBTabs> with SingleTickerProviderStateMixin
     return Text(widget.route + " " + widget.oriTC + " → " + widget.destTC);
   }
 
+  Color getColor(String operatorHK) {
+    if (operatorHK == "CTB" || operatorHK == "ctb" ) {
+      return Colors.blue[600];
+    } else {
+      return Colors.purple;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -78,7 +86,7 @@ class _NWFBTabsState extends State<NWFBTabs> with SingleTickerProviderStateMixin
              }
           },
         ),
-        backgroundColor: Colors.purple,
+        backgroundColor: getColor(widget.operatorHK),
         title: nwfbAppBar(widget.oriTC, widget.destTC),
         bottom: TabBar(
           controller: nwfbController,

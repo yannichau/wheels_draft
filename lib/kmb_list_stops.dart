@@ -17,11 +17,13 @@ class KMBListStops extends StatefulWidget {
   final String route;
   final String bound;
   final String serviceType;
+  final bool islwb;
 
   KMBListStops({
     @required this.route,
     @required this.serviceType,
     @required this.bound,
+    @required this.islwb,
     Key key,
   }) : super(key: key);
 
@@ -72,6 +74,13 @@ class _KMBListStopsState extends State<KMBListStops>
     }
     //print(stop);
     return Text(stop);
+  }
+
+  String parseOperator() {
+    if (widget.islwb) {
+      return "lwb";
+    }
+    return "kmb";
   }
 
   ///////// DECLARE TEMPORARY LOCAL VARIABLES //////////
@@ -141,7 +150,7 @@ class _KMBListStopsState extends State<KMBListStops>
                                     kmbBound +
                                     kmbLS.data.routeStopsList[index].bsiCode +
                                     kmbServiceType,
-                                operatorHK: "kmb",
+                                operatorHK: parseOperator(),
                                 route: kmbRoute,
                                 bound: kmbBound,
                                 seq: kmbLS.data.routeStopsList[index].seq,

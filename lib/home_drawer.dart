@@ -109,7 +109,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             child: ListTile(
               title: Text('聲明'),
               subtitle: Text(
-                '本 app 的資料庫及到站預報由九龍巴士（一九三三）有限公司及城巴/新巴（新創建集團成員）提供。如有任何資料配對錯漏，敬請原諒。誠邀您使用 feedback 功能匯報任何意見和 bug。謝謝😬！'
+                '本 app 的資料庫及到站預報由九龍巴士（一九三三）有限公司及城巴/新巴（新創建集團成員）提供。如有任何資料配對錯漏，敬請原諒。誠邀您使用 feedback 功能匯報任何意見和 bug。謝謝！'
               ),
             ),
           ),
