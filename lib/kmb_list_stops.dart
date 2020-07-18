@@ -125,7 +125,7 @@ class _KMBListStopsState extends State<KMBListStops>
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text('加到我的最愛？'),
-                        content: const Text('這會令此車站出現於主畫面右邊的「我的最愛」。'),
+                        content: const Text('你會喺「我的最愛」搵到我。'),
                         actions: <Widget>[
                           FlatButton(
                             child: const Text('取消'),
@@ -148,6 +148,8 @@ class _KMBListStopsState extends State<KMBListStops>
                                 stopCode: kmbLS.data.routeStopsList[index].bsiCode,
                                 cName: kmbLS.data.routeStopsList[index].cName,
                                 serviceType: kmbServiceType,
+                                oriTC: kmbLS.data.routeStopsList[0].cName,
+                                destTC: kmbLS.data.routeStopsList[kmbLS.data.routeStopsList.length-1].cName,
                               );
                               setState(() {
                                 DBProvider.db.createFavstop(currentStop);

@@ -193,9 +193,9 @@
         },
         {
             "route_no": "6X",
-            "ori_tc": "赤柱監獄",
+            "ori_tc": "中環（交易廣場）",
             "direction": "↔",
-            "dest_tc": "中環（交易廣場）",
+            "dest_tc": "赤柱監獄",
             "remarks_tc": "",
             "fare": "$ 9.0",
             "tag": "",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wheels_draft/nwfb_stop.dart';
 import 'nwfb_list_stops.dart' as first;
 import 'nwfb_timetable.dart' as second;
 
@@ -41,6 +42,29 @@ class _NWFBTabsState extends State<NWFBTabs> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
+  bool isNumeric(String s) {
+  if(s == null) {
+    return false;
+  }
+  return double.parse(s, (e) => null) != null;
+  }
+
+  Widget nwfbAppBar(String oriTC, String destTC) {
+    Widget origin;
+    Widget destination;
+    if (isNumeric(oriTC) && isNumeric(destTC)) {
+      origin = NWFBStop(stopID: oriTC);
+      destination = NWFBStop(stopID: destTC);
+      return Row(children: [
+        Text(widget.route + " "),
+        origin,
+        Text(" → "),
+        destination
+      ],);
+    }
+    return Text(widget.route + " " + widget.oriTC + " → " + widget.destTC);
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -55,7 +79,7 @@ class _NWFBTabsState extends State<NWFBTabs> with SingleTickerProviderStateMixin
           },
         ),
         backgroundColor: Colors.purple,
-        title: new Text(widget.route + " " + widget.oriTC + " → " + widget.destTC),
+        title: nwfbAppBar(widget.oriTC, widget.destTC),
         bottom: TabBar(
           controller: nwfbController,
           tabs: <Tab>[

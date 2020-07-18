@@ -363,7 +363,7 @@ class _AllRouteIndexState extends State<AllRouteIndex> with AutomaticKeepAliveCl
               color: Colors.grey[600],
             )),
         children: <Widget>[
-          Text("車費💸: " + _routesForDisplay[index].fareDollar),
+          Text("車費: " + _routesForDisplay[index].fareDollar),
           Align(
               child: Column(children: [
             _availableDestinations(

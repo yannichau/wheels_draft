@@ -101,7 +101,7 @@ class _NWFBListStopsState extends State<NWFBListStops> {
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: Text('加到我的最愛？'),
-                      content: const Text('這會令此車站出現於主畫面右邊的「我的最愛」。'),
+                      content: const Text('你會喺「我的最愛」搵到我。'),
                       actions: <Widget>[
                         FlatButton(
                           child: const Text('取消'),
@@ -121,11 +121,14 @@ class _NWFBListStopsState extends State<NWFBListStops> {
                               stopCode: nwfbLS.routeStopsList[index].stop,
                               cName: nwfbLS.routeStopsList[index].stop, //pass stopcode as cName for NWFB
                               serviceType: "null",
+                              oriTC: nwfbLS.routeStopsList[0].stop,
+                              destTC: nwfbLS.routeStopsList[nwfbLS.routeStopsList.length-1].stop,
                             );
                             DBProvider.db.createFavstop(currentStop);
                             print(
                                 "added ${nwfbLS.routeStopsList[index].stop} favourite to database");
                             print(nwfbOperator);
+                            print("bound: "+ nwfbDirection);
                             Navigator.of(context).pop();
                           },
                         )

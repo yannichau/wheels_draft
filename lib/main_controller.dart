@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'all_route_index.dart' as first;
-import 'all_route_fav.dart' as second;
+import 'all_route_index.dart' as second;
+import 'all_route_fav.dart' as first;
 import 'home_drawer.dart';
 
 class MainTabs extends StatefulWidget {
@@ -33,8 +33,8 @@ class _MainTabsState extends State<MainTabs>
   }
 
   List<Widget> _widgets = [
-    first.AllRouteIndex(),
-    second.AllRouteFav(),
+    second.AllRouteIndex(),
+    first.AllRouteFav(),
   ];
 
   @override
@@ -45,8 +45,8 @@ class _MainTabsState extends State<MainTabs>
         drawer: HomeDrawer(),
         body: TabBarView(
           children: [
-            first.AllRouteIndex(),
-            second.AllRouteFav(),
+            first.AllRouteFav(),
+            second.AllRouteIndex(),
           ],
         ),
         bottomNavigationBar: new TabBar(
@@ -60,8 +60,8 @@ class _MainTabsState extends State<MainTabs>
           //currentIndex: index,
           //onTap: tapped,
           tabs: [
-            SafeArea(child: Tab(icon: new Icon(Icons.directions_bus), text:'路線')),
             SafeArea(child: Tab(icon: new Icon(Icons.favorite), text:'我的最愛')),
+            SafeArea(child: Tab(icon: new Icon(Icons.directions_bus), text:'路線')),
             /*
             Padding(
               padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),

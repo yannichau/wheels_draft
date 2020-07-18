@@ -21,6 +21,8 @@ class FavStop {
   String cName;
   String serviceType;
   String seq;
+  String oriTC;
+  String destTC;
 
   FavStop({
     this.id,
@@ -30,7 +32,9 @@ class FavStop {
     this.seq,
     this.stopCode,
     this.cName,
-    this.serviceType
+    this.serviceType,
+    this.oriTC,
+    this.destTC,
   });
 
   FavStop.fromJson(Map<String, dynamic> json) {
@@ -42,6 +46,8 @@ class FavStop {
     stopCode = json["StopCode"];
     cName = json["Name_TC"];
     serviceType = json["ServiceType"];
+    oriTC = json["OriTC"];
+    destTC = json["DestTC"];
   }
 
   Map<String, dynamic> toJson() => {
@@ -53,6 +59,8 @@ class FavStop {
     "StopCode": stopCode,
     "Name_TC": cName, //is stopID for NWFB routes
     "ServiceType": serviceType,
+    "OriTC": oriTC,
+    "DestTC": destTC,
   };
 }
 
@@ -88,7 +96,9 @@ class DBProvider {
           'Seq TEXT,'
           'StopCode TEXT,'
           'Name_TC TEXT,'
-          'ServiceType TEXT'
+          'ServiceType TEXT,'
+          'OriTC TEXT,'
+          'DestTC TEXT'
       ')');
     });
   }
