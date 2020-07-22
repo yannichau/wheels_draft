@@ -17,7 +17,7 @@ As the app is opened, the user is greeted with a highly versatile home page. On 
 - Upon tapping a route card, the tapped card expands to show navigators to a specific bound of the route; in most cases there are 2 bounds (origin to destination and destination to origin),
 - Tapping the search icon in the app bar reveals the on-screen keyboard, where the user can input a specific route,
 - Swiping from the left edge reveals the home drawer, which includes navigators to settings (currently incomplete) and other useful links; and finally,
-- Swiping from the right edge or tapping on the right icon within the bottom navigation bar reveals the yet-to-be-completed favourites page, which will include navigators to user specified routes or route-stops,
+- Swiping from the right edge or tapping on the left icon within the bottom navigation bar reveals the favourites page, which include navigatorss to user specified route-stops,
 
 ![home_search.gif](ExampleGIFs/home_search.gif) ![home_drawer.gif](ExampleGIFs/home_drawer.gif)
 
@@ -31,7 +31,7 @@ Clicking into a specific bound of a route reveals a new screen, where:
 
 ## Documentation
 
-The following is the documentation for the development of this app. At the moment, this section is also only written in English (ironically the app is currently only available in traditional Chinese). I will attempt to document this project comprehensively, though the format might be slightly (quite) informal since this is merely a casual personal project.
+The following is the documentation for the development of this app. At the moment, this section is also only written in English (ironically the interface is currently only available in traditional Chinese). I will attempt to document this project comprehensively, though the format might be slightly (quite) informal since this is merely a casual personal project.
 
 In addition, various technical details are omitted at the moment since they are subject to a huge refactoring when I start managing local storage.
 
