@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wheels_draft/kmb_tab_controller.dart';
 import 'nwfb_tab_controller.dart';
-//import 'home_drawer.dart';
+import 'kmb_list_stops_model.dart';
+import 'nwfb_list_stops_model.dart';
 
 import 'dart:async' show Future;
 import 'package:flutter/services.dart' show rootBundle;
@@ -79,6 +80,8 @@ class _AllRouteIndexState extends State<AllRouteIndex>
   Future<RouteFile> _futureRouteFile;
   static final GlobalKey<ScaffoldState> scaffoldKey =
       new GlobalKey<ScaffoldState>();
+  KMBLSService kmbLSService = KMBLSService();
+  NWFBLSService nwfblsService = NWFBLSService();
 
   //////////FUNCTIONS FOR RENDERING EXPANDING LIST TILES//////////
   String _setImage(String operator, String lantauTag) {
@@ -90,9 +93,10 @@ class _AllRouteIndexState extends State<AllRouteIndex>
       return 'images/nwfb.jpg';
     } else if (operator == "ctb") {
       return 'images/ctb.png';
-    } else {
-      return 'images/joint.png';
+    } else if (operator.contains("kmb") && operator.contains("ctb")) {
+      return 'images/ctbkmb.png';
     }
+    return 'images/kmbnwfb.png';
   }
 
   Icon _setTagIcon(String tag, String lantauTag) {
@@ -130,7 +134,12 @@ class _AllRouteIndexState extends State<AllRouteIndex>
 
   void _returnStops(String route, String serviceType, String bound,
       String operator, String oriTC, String destTC, bool isCircular) {
-    //print("operator: " + operator);
+    String operatorMod;
+    if (operator.contains("ctb")) {
+      operatorMod = "ctb";
+    } else {
+      operatorMod = "nwfb";
+    }
     if (operator == "kmb") {
       setState(() {
         Navigator.push(
@@ -173,7 +182,7 @@ class _AllRouteIndexState extends State<AllRouteIndex>
                   bound: bound,
                   oriTC: oriTC,
                   destTC: destTC,
-                  operatorHK: operator,
+                  operatorHK: operatorMod,
                   isSearching: _isSearching,
                 )),
       );
@@ -183,15 +192,14 @@ class _AllRouteIndexState extends State<AllRouteIndex>
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => KMBTabs(
-                  route: route,
-                  serviceType: serviceType,
-                  bound: bound,
-                  oriTC: oriTC,
-                  destTC: destTC,
-                  isSearching: _isSearching,
-                  isCircular: isCircular,
-                  islwb: false)),
+              builder: (context) => NWFBTabs(
+                    route: route,
+                    bound: bound,
+                    oriTC: oriTC,
+                    destTC: destTC,
+                    operatorHK: operatorMod,
+                    isSearching: _isSearching,
+                  )),
         );
       });
     }
@@ -328,6 +336,55 @@ class _AllRouteIndexState extends State<AllRouteIndex>
         title: _isSearching ? _buildSearchBar() : _buildTitle(),
         actions: _buildActions(),
       ),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.teal,
+          child: Icon(Icons.refresh),
+          onPressed: () {
+            return showDialog(
+              context: context,
+              barrierDismissible:
+                  false, // user must tap button for close dialog!
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('更新所有路線？'),
+                  content: const Text('這會刪除所有已下載的路線。如果你現在沒有網絡，將無法載入任何新路線。'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: const Text('取消'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    FlatButton(
+                      child: const Text('確認'),
+                      onPressed: () {
+                        setState(() {
+                          kmbLSService.deleteKMBLS();
+                          nwfblsService.deleteNWFBLS();
+                        });
+                        Navigator.of(context).pop();
+                        return showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                  title: Text("已更新路線！"),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: const Text('好'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ]);
+                            });
+                      },
+                    )
+                  ],
+                );
+              },
+            );
+          }),
       body: FutureBuilder<RouteFile>(
           future: _futureRouteFile,
           builder: (context, snapshot) {

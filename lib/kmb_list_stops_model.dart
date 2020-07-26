@@ -23,6 +23,12 @@ class KMBLSService {
     print("saved item as " + "kmbroute"+route+"bound"+bound+"serviceType"+serviceType);
   }
 
+  void deleteKMBLS() async {
+    await storage.ready;
+    storage.clear();
+    print("deleted entire KMBLS");
+  }
+
   Future<ListStops> getKMBLS(String route, String serviceType, String bound) async {
     ListStops kmbLS = await getKMBLSFromCache(route, serviceType, bound);
     if (kmbLS == null) {

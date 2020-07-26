@@ -70,10 +70,10 @@ class _NWFBListStopsState extends State<NWFBListStops> {
 
   Widget _listStops() {
     if (nwfbLS == null) {
-      if (widget.operatorHK == "CTB") {
+      if (widget.operatorHK == "ctb") {
         return LinearProgressIndicator(
           backgroundColor: Colors.red,
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow[600]),
         );
       } else {
         return LinearProgressIndicator(

@@ -8882,7 +8882,7 @@
             "remarks_tc": "",
             "fare": "$ 10.4",
             "tag": "",
-            "operator": "ctbkmbnwfb",
+            "operator": "kmbnwfb",
             "route_type": "bidirectional"
         },
         {
@@ -8893,7 +8893,7 @@
             "remarks_tc": "只於佛誕翌日凌晨服務",
             "fare": "$ 15.5",
             "tag": "special",
-            "operator": "ctbkmbnwfb",
+            "operator": "kmbnwfb",
             "route_type": "one_way"
         },
         {
@@ -8904,7 +8904,7 @@
             "remarks_tc": "只於香港書展期間服務",
             "fare": "$ 15.5",
             "tag": "special",
-            "operator": "ctbkmbnwfb",
+            "operator": "kmbnwfb",
             "route_type": "one_way"
         },
         {
@@ -8915,7 +8915,7 @@
             "remarks_tc": "",
             "fare": "$ 10.4",
             "tag": "",
-            "operator": "ctbkmbnwfb",
+            "operator": "kmbnwfb",
             "route_type": "bidirectional"
         },
         {
@@ -11215,7 +11215,7 @@
             "remarks_tc": "只於星期一至五早上繁忙時間服務（假期除外）",
             "fare": "$ 20.2",
             "tag": "peak",
-            "operator": "ctbkmbnwfb",
+            "operator": "kmbnwfb",
             "route_type": "one_way"
         },
         {
@@ -11226,7 +11226,7 @@
             "remarks_tc": "只於星期一至五早上繁忙時間服務（假期除外）",
             "fare": "$ 20.2",
             "tag": "peak",
-            "operator": "ctbkmbnwfb",
+            "operator": "kmbnwfb",
             "route_type": "one_way"
         },
         {
@@ -11237,7 +11237,7 @@
             "remarks_tc": "只於星期一至五晚間繁忙時間服務（假期除外）",
             "fare": "$ 20.2",
             "tag": "peak",
-            "operator": "ctbkmbnwfb",
+            "operator": "kmbnwfb",
             "route_type": "one_way"
         },
         {
@@ -11248,7 +11248,7 @@
             "remarks_tc": "只於星期一至五早上繁忙時間服務（假期除外）",
             "fare": "$ 20.2",
             "tag": "peak",
-            "operator": "ctbkmbnwfb",
+            "operator": "ctbkmb",
             "route_type": "one_way"
         },
         {
@@ -11259,7 +11259,7 @@
             "remarks_tc": "只於星期一至五晚間繁忙時間服務（假期除外）",
             "fare": "$ 20.2",
             "tag": "peak",
-            "operator": "ctbkmbnwfb",
+            "operator": "ctbkmb",
             "route_type": "one_way"
         },
         {
@@ -11270,7 +11270,7 @@
             "remarks_tc": "只於平日早上繁忙時間服務（假期除外）",
             "fare": "$ 17.0",
             "tag": "peak",
-            "operator": "ctbkmbnwfb",
+            "operator": "ctbkmb",
             "route_type": "one_way",
             "lantau_tag": ""
         },
@@ -11282,7 +11282,7 @@
             "remarks_tc": "只於星期一至五晚間繁忙時間服務（假期除外）",
             "fare": "$ 17.0",
             "tag": "peak",
-            "operator": "ctbkmbnwfb",
+            "operator": "ctbkmb",
             "route_type": "one_way",
             "lantau_tag": ""
         },
@@ -11294,7 +11294,7 @@
             "remarks_tc": "只於星期六早上繁忙時間服務（假期除外）",
             "fare": "$ 17.0",
             "tag": "peak",
-            "operator": "ctbkmbnwfb",
+            "operator": "kmbnwfb",
             "route_type": "one_way",
             "lantau_tag": ""
         },
@@ -11306,7 +11306,7 @@
             "remarks_tc": "只於星期一至五晚間繁忙時間服務（假期除外）",
             "fare": "$ 17.0",
             "tag": "peak",
-            "operator": "ctbkmbnwfb",
+            "operator": "kmbnwfb",
             "route_type": "one_way",
             "lantau_tag": ""
         },
@@ -11318,7 +11318,7 @@
             "remarks_tc": "只於星期一至五早上繁忙時間服務（假期除外）",
             "fare": "$ 17.0",
             "tag": "peak",
-            "operator": "ctbkmbnwfb",
+            "operator": "kmbnwfb",
             "route_type": "one_way",
             "lantau_tag": ""
         },
@@ -11330,7 +11330,7 @@
             "remarks_tc": "只於星期一至五早上繁忙時間服務（假期除外）",
             "fare": "$ 17.0",
             "tag": "peak",
-            "operator": "ctbkmbnwfb",
+            "operator": "kmbnwfb",
             "route_type": "one_way",
             "lantau_tag": ""
         },

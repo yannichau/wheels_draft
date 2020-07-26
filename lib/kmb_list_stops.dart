@@ -100,82 +100,89 @@ class _KMBListStopsState extends State<KMBListStops>
         valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
       );
     }
-    return ListView.builder(
-      key: widget._scaffoldKey,
-      itemCount: kmbLS.data.routeStopsList.length,
-      itemBuilder: (context, index) {
-        // ASSIGN FUTURE VALUES TO VARIABLES
-        kmbRoute = kmbLS.data.routeStopsList[index].route;
-        kmbBSI = kmbLS.data.routeStopsList[index].bsiCode;
-        kmbSeq = kmbLS.data.routeStopsList[index].seq;
-        kmbBound = kmbLS.data.routeStopsList[index].bound;
-        kmbServiceType = kmbLS.data.routeStopsList[index].serviceType;
-        kmbStopCName = kmbLS.data.routeStopsList[index].cName;
-        kmbStopCLocation = kmbLS.data.routeStopsList[index].cLocation;
+    return Scaffold(
+      body: ListView.builder(
+        key: widget._scaffoldKey,
+        itemCount: kmbLS.data.routeStopsList.length,
+        itemBuilder: (context, index) {
+          // ASSIGN FUTURE VALUES TO VARIABLES
+          kmbRoute = kmbLS.data.routeStopsList[index].route;
+          kmbBSI = kmbLS.data.routeStopsList[index].bsiCode;
+          kmbSeq = kmbLS.data.routeStopsList[index].seq;
+          kmbBound = kmbLS.data.routeStopsList[index].bound;
+          kmbServiceType = kmbLS.data.routeStopsList[index].serviceType;
+          kmbStopCName = kmbLS.data.routeStopsList[index].cName;
+          kmbStopCLocation = kmbLS.data.routeStopsList[index].cLocation;
 
-        return Card(
-          child: ExpansionTile(
-              leading: Text("${index + 1}"),
-              title: _removeUnknown(kmbStopCName), // why is this not working?
-              subtitle: Text(
-                kmbStopCLocation,
-                style: TextStyle(
-                  color: Colors.grey[500],
-                  fontSize: 13, 
+          return Card(
+            child: ExpansionTile(
+                leading: Text("${index + 1}"),
+                title: _removeUnknown(kmbStopCName), // why is this not working?
+                subtitle: Text(
+                  kmbStopCLocation,
+                  style: TextStyle(
+                    color: Colors.grey[500],
+                    fontSize: 13,
+                  ),
                 ),
-              ),
-              trailing: new IconButton(
-                icon: new Icon(Icons.favorite),
-                onPressed: () {
-                  return showDialog(
-                    context: context,
-                    barrierDismissible:
-                        false, // user must tap button for close dialog!
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('加到我的最愛？'),
-                        content: const Text('你會喺「我的最愛」搵到我。'),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: const Text('取消'),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                          FlatButton(
-                            child: const Text('確認'),
-                            onPressed: () {
-                              FavStop currentStop = FavStop(
-                                id: kmbRoute + 
-                                    kmbBound +
-                                    kmbLS.data.routeStopsList[index].bsiCode +
-                                    kmbServiceType,
-                                operatorHK: parseOperator(),
-                                route: kmbRoute,
-                                bound: kmbBound,
-                                seq: kmbLS.data.routeStopsList[index].seq,
-                                stopCode: kmbLS.data.routeStopsList[index].bsiCode,
-                                cName: kmbLS.data.routeStopsList[index].cName,
-                                serviceType: kmbServiceType,
-                                oriTC: kmbLS.data.routeStopsList[0].cName,
-                                destTC: kmbLS.data.routeStopsList[kmbLS.data.routeStopsList.length-1].cName,
-                              );
-                              setState(() {
-                                DBProvider.db.createFavstop(currentStop);
-                              });
-                              print(
-                                  "added ${kmbLS.data.routeStopsList[index].bsiCode} favourite to database");
-                              Navigator.of(context).pop();
-                            },
-                          )
-                        ],
-                      );
-                    },
-                  );
-                },
-              )),
-        );
-      },
+                trailing: new IconButton(
+                  icon: new Icon(Icons.favorite),
+                  onPressed: () {
+                    return showDialog(
+                      context: context,
+                      barrierDismissible:
+                          false, // user must tap button for close dialog!
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('加到我的最愛？'),
+                          content: const Text('你會喺「我的最愛」搵到我。'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: const Text('取消'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            FlatButton(
+                              child: const Text('確認'),
+                              onPressed: () {
+                                FavStop currentStop = FavStop(
+                                  id: kmbRoute +
+                                      kmbBound +
+                                      kmbLS.data.routeStopsList[index].bsiCode +
+                                      kmbServiceType,
+                                  operatorHK: parseOperator(),
+                                  route: kmbRoute,
+                                  bound: kmbBound,
+                                  seq: kmbLS.data.routeStopsList[index].seq,
+                                  stopCode:
+                                      kmbLS.data.routeStopsList[index].bsiCode,
+                                  cName: kmbLS.data.routeStopsList[index].cName,
+                                  serviceType: kmbServiceType,
+                                  oriTC: kmbLS.data.routeStopsList[0].cName,
+                                  destTC: kmbLS
+                                      .data
+                                      .routeStopsList[
+                                          kmbLS.data.routeStopsList.length - 1]
+                                      .cName,
+                                );
+                                setState(() {
+                                  DBProvider.db.createFavstop(currentStop);
+                                });
+                                print(
+                                    "added ${kmbLS.data.routeStopsList[index].bsiCode} favourite to database");
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  },
+                )),
+          );
+        },
+      ),
     );
   }
 

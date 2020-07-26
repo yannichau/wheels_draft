@@ -89,5 +89,6 @@ flutter:
   - images/kmb.png
   - images/lwb.png
   - images/nwfb.jpg
-  - images/joint.png
+  - images/kmbnwfb.png
+  - images/ctbkmb.png
   - assets/all_routes.json

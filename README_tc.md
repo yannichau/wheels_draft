@@ -16,8 +16,8 @@
 Wheels 的主畫面以簡單的介面包裝各種靈活的工具，讓你輕易上手。
 
 在「路線搜尋」中，你能：
-- 看到四巴的所有路線；每張卡現實了路線的號碼、營運者圖標、出發點和終點、及適用的特別資訊，
-- 
+- 看到四巴的所有路線；每張路線卡顯示了路線的號碼、營運者圖標、出發點和終點、及適用的特別資訊，
+- 當你按下路線卡時，
 
 - Upon tapping a route card, the tapped card expands to show navigators to a specific bound of the route; in most cases there are 2 bounds (origin to destination and destination to origin),
 - Tapping the search icon in the app bar reveals the on-screen keyboard, where the user can input a specific route,

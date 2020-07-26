@@ -15,6 +15,12 @@ class NWFBLSService {
     print("saved item as " + "nwfbroute"+route+"bound"+bound+"operator"+operatorHK);
   }
 
+    void deleteNWFBLS() async {
+    await storage.ready;
+    storage.clear();
+    print("deleted all NWFBLS");
+  }
+
   Future<NWFBAPI> getNWFBLS(String route, String bound, String operatorHK) async {
     NWFBAPI nwfbLS = await getNWFBLSFromCache(route, bound, operatorHK);
     if (nwfbLS == null) {

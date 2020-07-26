@@ -5,6 +5,8 @@ import 'main_fav_model.dart';
 import 'nwfb_stop.dart';
 import 'kmb_tab_controller.dart';
 import 'nwfb_tab_controller.dart';
+import 'kmb_list_stops_model.dart';
+import 'nwfb_list_stops_model.dart';
 
 class AllRouteFav extends StatefulWidget {
   @override
@@ -14,18 +16,19 @@ class AllRouteFav extends StatefulWidget {
 }
 
 class _AllRouteFavState extends State<AllRouteFav> {
-  String _setImage(String operatorHK) {
-    if (operatorHK == "lwb") {
+  String _setImage(String operator) {
+    if (operator == "lwb") {
       return 'images/lwb.png';
-    } else if (operatorHK == "kmb") {
+    } else if (operator == "kmb") {
       return 'images/kmb.png';
-    } else if (operatorHK == "NWFB") {
+    } else if (operator == "NWFB") {
       return 'images/nwfb.jpg';
-    } else if (operatorHK == "CTB") {
+    } else if (operator == "CTB") {
       return 'images/ctb.png';
-    } else {
-      return 'images/joint.png';
+    } else if (operator == "ctbkmb") {
+      return 'images/ctbkmb.png';
     }
+    return 'images/kmbnwfb.png';
   }
 
   Widget stopTitle(String operatorHK, String cName) {
@@ -59,6 +62,22 @@ class _AllRouteFavState extends State<AllRouteFav> {
       String seq,
       String oriTC,
       String destTC) {
+    String boundMod;
+    if (bound.contains("O")) {
+      //Outbound
+      boundMod = "1";
+    } else if (bound.contains("I")) {
+      //Inbound
+      bound = "2";
+    } else {
+      boundMod = "0";
+    }
+    String operatorHKmod;
+    if (operatorHK.contains("ctb")) {
+      operatorHKmod = "ctb";
+    } else {
+      operatorHKmod = "nwfb";
+    }
     if (operatorHK == "kmb") {
       setState(() {
         Navigator.push(
@@ -94,17 +113,7 @@ class _AllRouteFavState extends State<AllRouteFav> {
                   )),
         );
       });
-    }else if (operatorHK == "CTB" || operatorHK == "NWFB") {
-      String boundMod;
-      if (bound.contains("O")) {
-        //Outbound
-        boundMod = "1";
-      } else if (bound.contains("I")) {
-        //Inbound
-        bound = "2";
-      } else {
-        boundMod = "0";
-      }
+    } else if (operatorHK == "CTB" || operatorHK == "NWFB") {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -123,15 +132,14 @@ class _AllRouteFavState extends State<AllRouteFav> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => KMBTabs(
-                  route: route,
-                  serviceType: serviceType,
-                  bound: bound,
-                  oriTC: oriTC,
-                  destTC: destTC,
-                  isSearching: false,
-                  isCircular: false,
-                  islwb: false,)),
+              builder: (context) => NWFBTabs(
+                    route: route,
+                    bound: boundMod,
+                    oriTC: oriTC,
+                    destTC: destTC,
+                    operatorHK: operatorHK,
+                    isSearching: false,
+                  )),
         );
       });
     }
@@ -320,7 +328,10 @@ class _AllRouteFavState extends State<AllRouteFav> {
                                                         setState(() {
                                                           DBProvider.db
                                                               .deleteFavStop(
-                                                                  snapshot.data[index].id);
+                                                                  snapshot
+                                                                      .data[
+                                                                          index]
+                                                                      .id);
                                                         });
                                                         Navigator.of(context)
                                                             .pop();
