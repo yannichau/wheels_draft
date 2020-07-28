@@ -1,0 +1,14 @@
+{
+    "type": "Stop",
+    "version": "1.0",
+    "generated_timestamp ": "2020-07-26T20:24:14+08:00",
+    "data": {
+        "stop": "002403",
+        "name_tc": "跑馬地 (上)",
+        "name_en": "Happy Valley (Upper)",
+        "lat": "22.264400182091",
+        "long": "114.18864188053",
+        "name_sc": "跑马地 (上)",
+        "data_timestamp": "2020-07-26T05:00:03+08:00"
+    }
+}

@@ -1,10 +1,9 @@
 import 'dart:async' show Future;
 import 'dart:convert';
 import 'package:localstorage/localstorage.dart';
-//import 'package:flutter/services.dart' show rootBundle;
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+//import 'package:flutter/services.dart' show rootBundle;
 
 class NWFBStopService {
   static LocalStorage storage = new LocalStorage("nwfbStops");
