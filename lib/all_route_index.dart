@@ -82,6 +82,10 @@ class _AllRouteIndexState extends State<AllRouteIndex>
       new GlobalKey<ScaffoldState>();
   KMBLSService kmbLSService = KMBLSService();
   NWFBLSService nwfblsService = NWFBLSService();
+  int operatorState =
+      0; //0 for all, 1 for kmb, 2 for lwb, 3 for nwfb, 4 for nwfb
+  String _searchRoute;
+  bool operatorFilter;
 
   //////////FUNCTIONS FOR RENDERING EXPANDING LIST TILES//////////
   String _setImage(String operator, String lantauTag) {
@@ -223,13 +227,19 @@ class _AllRouteIndexState extends State<AllRouteIndex>
         //border: OutlineInputBorder(
         //    borderRadius: BorderRadius.all(Radius.circular(0.0)))
       ),
-      onChanged: (text) {
-        text = text.toUpperCase();
+      onChanged: (searchText) {
+        searchText = searchText.toUpperCase();
         setState(() {
-          _routesForDisplay = _routesUnfiltered.where((note) {
-            var routeNumber = note.routeNo.toUpperCase();
-            return routeNumber.startsWith(text);
-          }).toList();
+          _searchRoute = searchText;
+          if (searchText == "") {
+            _routesForDisplay = _routesUnfiltered;
+          } else {
+            _routesForDisplay = _routesForDisplay.where((note) {
+              //previously _routesUnfiltered here
+              var routeNumber = note.routeNo.toUpperCase();
+              return routeNumber.startsWith(searchText);
+            }).toList();
+          }
         });
       },
     );
@@ -250,22 +260,38 @@ class _AllRouteIndexState extends State<AllRouteIndex>
     setState(() {
       _isSearching = false;
       _routesForDisplay = _routesUnfiltered;
+      operatorState = 0;
     });
   }
 
-  _buildActions() {
-    /*
-    if (_isSearching) {
-      return <Widget>[
-        new IconButton(
-          icon: const Icon(Icons.clear),
-          onPressed: () { //TODO:
+  List<Widget> filterButton(
+      String displayName, String containsName, int newOpState) {
+    return [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: OutlineButton(
+          textColor: Colors.white,
+          borderSide: BorderSide(color: Colors.white),
+          child: Text(displayName),
+          onPressed: () {
+            setState(() {
+              operatorState = newOpState;
+              if (operatorState == 0) {
+                _routesForDisplay = _routesUnfiltered;
+              } else {
+                _routesForDisplay = _routesForDisplay.where((note) {
+                  var busOperator = note.operatorHK.toLowerCase();
+                  return busOperator.contains(containsName);
+                }).toList();
+              }
+            });
           },
         ),
-      ];
-    }
-    */
+      ),
+    ];
+  }
 
+  List<Widget> _buildActions() {
     if (!_isSearching) {
       return <Widget>[
         Padding(
@@ -273,6 +299,98 @@ class _AllRouteIndexState extends State<AllRouteIndex>
           child: new IconButton(
             icon: const Icon(Icons.search),
             onPressed: _startSearch,
+          ),
+        ),
+      ];
+    }
+
+    if (_isSearching) {
+      String dropdownValue;
+      /*
+      if (operatorState == 0) {
+        return filterButton("kmb", "kmb", 1);
+      }
+      if (operatorState == 1) {
+        return filterButton("ctb", "ctb", 2);
+      }
+      if (operatorState == 2) {
+        return filterButton("nwfb", "nwfb", 3);
+      }
+      if (operatorState == 3) {
+        return filterButton("lwb", "lwb", 4);
+      }
+      if (operatorState == 4) {
+        return filterButton("all", "all", 0);
+      } else {
+        return [
+          Container(),
+        ];
+      }
+      */
+    if (operatorState != 0) {
+      return [
+        IconButton(
+          icon: Icon(Icons.close), 
+          onPressed: () {
+            operatorState = 0;
+            _stopSearching();
+            Navigator.of(context).pop();
+          }
+        )
+      ];
+    }
+      return [
+        Padding(
+          padding: const EdgeInsets.only(right: 20),
+          child: DropdownButton<String>(
+            value: dropdownValue,
+            icon: Icon(Icons.tune, color: Colors.white),
+            iconSize: 24,
+            elevation: 16,
+            style: TextStyle(color: Colors.indigo),
+            focusColor: Colors.white,
+            underline: Container(
+              height: 0,
+              color: Colors.white,
+            ),
+            onChanged: (String newValue) {
+              String newValueEng;
+              var tempState;
+              if (newValue == '所有') {
+                newValueEng = 'all';
+                tempState = 0;
+              } else if (newValue == '九巴') {
+                newValueEng = 'kmb';
+                tempState = 1;
+              } else if (newValue == '城巴') {
+                newValueEng = 'ctb';
+                tempState = 2;
+              } else if (newValue == '新巴') {
+                newValueEng = 'nwfb';
+                tempState = 3;
+              } else {
+                newValueEng = 'lwb'; //fix later
+                tempState = 4;
+              }
+              setState(() {
+                operatorState = tempState;
+                if (newValueEng == 'all') {
+                  _routesForDisplay = _routesUnfiltered;
+                } else {
+                  _routesForDisplay = _routesForDisplay.where((note) {
+                    var busOperator = note.operatorHK.toLowerCase();
+                    return busOperator.contains(newValueEng);
+                  }).toList();
+                }
+              });
+            },
+            items: <String>['所有', '九巴','城巴','新巴','龍運', ]
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
           ),
         ),
       ];
