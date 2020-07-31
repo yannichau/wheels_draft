@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'all_route_index.dart' as second;
+import 'all_route_index_alternative.dart' as second; //alternative
 import 'all_route_fav.dart' as first;
 import 'home_drawer.dart';
 
@@ -34,7 +34,7 @@ class _MainTabsState extends State<MainTabs>
   }
 
   List<Widget> _widgets = [
-    second.AllRouteIndex(),
+    second.AllRouteAltIndex(),
     first.AllRouteFav(),
   ];
 
@@ -47,7 +47,7 @@ class _MainTabsState extends State<MainTabs>
         body: TabBarView(
           children: [
             first.AllRouteFav(),
-            second.AllRouteIndex(),
+            second.AllRouteAltIndex(),
           ],
         ),
         bottomNavigationBar: new TabBar(
