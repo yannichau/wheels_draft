@@ -12,5 +12,5 @@ https://www.notion.so/Wheels-Rethinking-bus-apps-in-Hong-Kong-593d28d5da2c4f43ab
 
 大家好，'Wheels' 是一個提供九巴、龍運、城巴、新巴（下稱四巴）的資訊的平台。
 
-歡迎你到以下的網址參閱看看這個 project 的詳細說明、筆錄的：
+歡迎你到以下的網址參閱看看這個 project 的詳細說明、筆錄：
 https://www.notion.so/Wheels-Rethinking-bus-apps-in-Hong-Kong-593d28d5da2c4f43ab7cbd59df237604
