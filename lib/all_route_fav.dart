@@ -10,9 +10,7 @@ import 'nwfb_tab_controller.dart';
 
 class AllRouteFav extends StatefulWidget {
   @override
-  _AllRouteFavState createState() => _AllRouteFavState();
-  final GlobalKey<ScaffoldState> _scaffoldKey =
-      new GlobalKey<ScaffoldState>(); //WARNING
+  _AllRouteFavState createState() => _AllRouteFavState();//WARNING
 }
 
 class _AllRouteFavState extends State<AllRouteFav> {
@@ -22,7 +20,7 @@ class _AllRouteFavState extends State<AllRouteFav> {
     } else if (operator == "kmb") {
       return 'images/kmb.png';
     } else if (operator == "NWFB") {
-      return 'images/nwfb.jpg';
+      return 'images/nwfb.png';
     } else if (operator == "CTB") {
       return 'images/ctb.png';
     } else if (operator == "ctbkmb") {

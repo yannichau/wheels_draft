@@ -65,14 +65,14 @@ class AllRoute {
   }
 }
 
-class AllRouteAltIndex extends StatefulWidget {
-  AllRouteAltIndex({Key key}) : super(key: key);
+class AllRouteIndex extends StatefulWidget {
+  AllRouteIndex({Key key}) : super(key: key);
 
   @override
-  _AllRouteAltIndexState createState() => _AllRouteAltIndexState();
+  _AllRouteIndexState createState() => _AllRouteIndexState();
 }
 
-class _AllRouteAltIndexState extends State<AllRouteAltIndex>
+class _AllRouteIndexState extends State<AllRouteIndex>
     with AutomaticKeepAliveClientMixin {
   //////////DEFINE VARIABLES//////////
   List<AllRoute> _routesForDisplay = List<AllRoute>();
@@ -83,7 +83,7 @@ class _AllRouteAltIndexState extends State<AllRouteAltIndex>
       new GlobalKey<ScaffoldState>();
   KMBLSService kmbLSService = KMBLSService();
   NWFBLSService nwfblsService = NWFBLSService();
-  int operatorState =
+  int _operatorState =
       0; //0 for all, 1 for kmb, 2 for lwb, 3 for nwfb, 4 for nwfb
   bool operatorFilter;
   bool buttonEnabled = true;
@@ -263,7 +263,7 @@ class _AllRouteAltIndexState extends State<AllRouteAltIndex>
     setState(() {
       _isSearching = false;
       _routesForDisplay = _routesUnfiltered;
-      operatorState = 0;
+      _operatorState = 0;
       _routesPrev = _routesUnfiltered;
       buttonEnabled = true;
     });
@@ -365,6 +365,51 @@ class _AllRouteAltIndexState extends State<AllRouteAltIndex>
     );
   }
 
+  _buildFilterButton(
+      String operatorHK, Color color, double imageHeight, int opState) {
+    if (operatorHK == "all") {
+      return Container(
+        height: 60,
+        width: 60,
+        child: FloatingActionButton(
+            backgroundColor: color,
+            shape: CircleBorder(),
+            child: Icon(Icons.close, color: Colors.white),
+            onPressed: () {
+              setState(() {
+                _routesForDisplay = _routesPrev;
+              });
+            }),
+      );
+    }
+    return Container(
+      height: 60,
+      width: 60,
+      child: FloatingActionButton(
+        backgroundColor: color,
+        child: Image(
+          image: new AssetImage(_setImage(operatorHK)),
+          height: imageHeight,
+        ),
+        shape: CircleBorder(),
+        onPressed: () {
+          if (buttonEnabled) {
+            setState(() {
+              //buttonEnabled = false;
+              _operatorState = opState;
+              _routesForDisplay = _routesPrev.where((note) {
+                var busOperator = note.operatorHK.toLowerCase();
+                return busOperator.contains(operatorHK);
+              }).toList();
+            });
+          } else {
+            return null;
+          }
+        },
+      ),
+    );
+  }
+
   Future<String> _loadRouteAsset() async {
     return await rootBundle.loadString('assets/all_routes.json');
   }
@@ -457,173 +502,71 @@ class _AllRouteAltIndexState extends State<AllRouteAltIndex>
               },
             );
           }),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  height: 60,
-                  width: 60,
-                  child: OutlineButton(
-                    child: Image(
-                      image: new AssetImage(_setImage("kmb")),
-                      height: 50,
-                    ),
-                    shape: CircleBorder(),
-                    onPressed: () {
-                      if (buttonEnabled) {
-                        setState(() {
-                          //buttonEnabled = false;
-                          operatorState = 1;
-                          _routesForDisplay = _routesPrev.where((note) {
-                            var busOperator = note.operatorHK.toLowerCase();
-                            return busOperator.contains("kmb");
-                          }).toList();
-                        });
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                ),
-                Container(
-                  height: 60,
-                  width: 60,
-                  child: OutlineButton(
-                    shape: CircleBorder(),
-                    child: Image(
-                      image: new AssetImage(_setImage("ctb")),
-                      height: 25,
-                    ),
-                    onPressed: () {
-                      if (buttonEnabled) {
-                        setState(() {
-                          //buttonEnabled = false;
-                          operatorState = 2;
-                          _routesForDisplay = _routesPrev.where((note) {
-                            var busOperator = note.operatorHK.toLowerCase();
-                            return busOperator.contains("ctb");
-                          }).toList();
-                        });
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                ),
-                Container(
-                  width: 60,
-                  height: 60,
-                  child: OutlineButton(
-                    child: Image(
-                      image: new AssetImage(_setImage("nwfb")),
-                      height: 25,
-                    ),
-                    shape: CircleBorder(),
-                    onPressed: () {
-                      if (buttonEnabled) {
-                        setState(() {
-                          //buttonEnabled = false;
-                          operatorState = 3;
-                          _routesForDisplay = _routesPrev.where((note) {
-                            var busOperator = note.operatorHK.toLowerCase();
-                            return busOperator.contains("nwfb");
-                          }).toList();
-                        });
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                ),
-                Container(
-                  height: 60,
-                  width: 60,
-                  child: OutlineButton(
-                    child: Image(
-                      image: new AssetImage(_setImage("lwb")),
-                      height: 25,
-                    ),
-                    shape: CircleBorder(),
-                    onPressed: () {
-                      if (buttonEnabled) {
-                        setState(() {
-                          //buttonEnabled = false;
-                          operatorState = 4;
-                          _routesForDisplay = _routesPrev.where((note) {
-                            var busOperator = note.operatorHK.toLowerCase();
-                            return busOperator.contains("lwb");
-                          }).toList();
-                        });
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                ),
-                Container(
-                  height: 60,
-                  width: 60,
-                  child: OutlineButton(
-                      shape: CircleBorder(),
-                      child: Icon(Icons.close),
-                      onPressed: () {
-                        setState(() {
-                          _routesForDisplay = _routesPrev;
-                        });
-                      }),
-                )
-              ],
+      body: Container(
+        color: Colors.transparent,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildFilterButton("kmb", Colors.white, 18, 1),
+                  _buildFilterButton("ctb", Colors.white, 25, 2),
+                  _buildFilterButton("nwfb", Colors.white, 25, 3),
+                  _buildFilterButton("lwb", Colors.white, 25, 4),
+                  _buildFilterButton("all", Colors.teal, 25, 0),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: FutureBuilder<RouteFile>(
-                future: _futureRouteFile,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    //_routesForDisplay = snapshot.data.allRouteList;
-                    //_routes = _routesForDisplay;
-                    ListView myList = new ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: _routesForDisplay.length, // + 1,
-                      itemBuilder: (context, index) {
-                        currentRoute = _routesForDisplay[index].routeNo;
-                        currentOp = _routesForDisplay[index].operatorHK;
-                        print("operator: " + prevOp + currentOp);
-                        ////////// FIX SPECIAL ROUTES LATER //////////TODO:
-                        if (currentRoute == prevRoute && currentOp == prevOp) {
-                          print("servicetype incremented");
-                          serviceType += 1;
-                        } else {
-                          serviceType = 1;
-                        }
-                        print("route: " + currentRoute);
-                        print("serviceType: " + "${serviceType}");
-                        prevRoute = currentRoute;
-                        prevOp = currentOp;
+            Expanded(
+              child: FutureBuilder<RouteFile>(
+                  future: _futureRouteFile,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      //_routesForDisplay = snapshot.data.allRouteList;
+                      //_routes = _routesForDisplay;
+                      ListView myList = new ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: _routesForDisplay.length, // + 1,
+                        itemBuilder: (context, index) {
+                          currentRoute = _routesForDisplay[index].routeNo;
+                          currentOp = _routesForDisplay[index].operatorHK;
+                          print("operator: " + prevOp + currentOp);
+                          ////////// FIX SPECIAL ROUTES LATER //////////TODO:
+                          if (currentRoute == prevRoute &&
+                              currentOp == prevOp) {
+                            print("servicetype incremented");
+                            serviceType += 1;
+                          } else {
+                            serviceType = 1;
+                          }
+                          print("route: " + currentRoute);
+                          print("serviceType: " + "${serviceType}");
+                          prevRoute = currentRoute;
+                          prevOp = currentOp;
 
-                        return _listItem(index); // - 1);
-                      },
+                          return _listItem(index); // - 1);
+                        },
+                      );
+                      return myList;
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}");
+                    }
+                    return LinearProgressIndicator(
+                      backgroundColor: Colors.teal,
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.teal[50]),
                     );
-                    return myList;
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  }
-                  return LinearProgressIndicator(
-                    backgroundColor: Colors.teal,
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.teal[50]),
-                  );
-                }),
-          ),
-        ],
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Card _listItem(index) {
+  Widget _listItem(index) {
     return Card(
       child: ExpansionTile(
         leading: Container(

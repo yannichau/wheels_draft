@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'all_route_index_alternative.dart' as second; //alternative
+import 'all_route_index_aug_1.dart' as second; //alternative
 import 'all_route_fav.dart' as first;
 import 'home_drawer.dart';
 
@@ -33,11 +33,6 @@ class _MainTabsState extends State<MainTabs>
     });
   }
 
-  List<Widget> _widgets = [
-    second.AllRouteAltIndex(),
-    first.AllRouteFav(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -47,58 +42,19 @@ class _MainTabsState extends State<MainTabs>
         body: TabBarView(
           children: [
             first.AllRouteFav(),
-            second.AllRouteAltIndex(),
+            second.AllRouteIndex(),
           ],
         ),
+        /*
         bottomNavigationBar: new TabBar(
-          //indicatorPadding: EdgeInsets.only(bottom:80),
           indicatorColor: Colors.indigo,
           labelColor: Colors.indigo,
-          //elevation: 10.0,
-          //fixedColor: Colors.white,
-          //unselectedItemColor: Colors.grey[300],
-          //backgroundColor: Colors.indigo,
-          //currentIndex: index,
-          //onTap: tapped,
           tabs: [
             SafeArea(child: Tab(icon: new Icon(Icons.favorite), text:'我的最愛')),
             SafeArea(child: Tab(icon: new Icon(Icons.directions_bus), text:'路線')),
-            /*
-            SafeArea(
-              child: Tab(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(Icons.favorite),
-                      Text('我的最愛'),
-                    ],
-                  )
-              ),
-            ),
-            SafeArea(
-              child: Tab(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Icon(Icons.directions_bus),
-                      Text('路線搜尋'),
-                    ],
-                  )
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-              child: Tab(
-                  icon: new Icon(Icons.directions_bus), text:'路線'),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5.0, bottom: 5.0),
-              child: Tab(
-                  icon: new Icon(Icons.favorite), text:'我的最愛'),
-            ),
-            */
           ],
         ),
+        */
       ),
     );
   }
