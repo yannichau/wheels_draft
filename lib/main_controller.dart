@@ -45,7 +45,6 @@ class _MainTabsState extends State<MainTabs>
             second.AllRouteIndex(),
           ],
         ),
-        /*
         bottomNavigationBar: new TabBar(
           indicatorColor: Colors.indigo,
           labelColor: Colors.indigo,
@@ -54,7 +53,6 @@ class _MainTabsState extends State<MainTabs>
             SafeArea(child: Tab(icon: new Icon(Icons.directions_bus), text:'路線')),
           ],
         ),
-        */
       ),
     );
   }
